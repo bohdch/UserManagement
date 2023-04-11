@@ -5,30 +5,11 @@ UserManagementWebAPI is a basic CRUD (Create, Read, Update, Delete) API for mana
 ## Project Structure
 
 The project structure of UserManagementWebAPI is as follows:
-UserManagementWebAPI/
-├── Controllers/
-│   ├── Delete.cs
-│   ├── Get.cs
-│   ├── Post.cs
-│   └── Put.cs
-├── Model/
-│   └── Person.cs
-├── ServiceFolder/
-│   └── UserService.cs
-├── Properties/
-│   └── launchSettings.json
-└── wwwroot/
-    ├── css/
-    │   └── site.css
-    └── js/
-        └── site.js
-
-
 - `Controllers/`: This folder contains the controller classes that define the endpoints for the API, including `Delete.cs`, `Get.cs`, `Post.cs`, and `Put.cs`.
 - `Model/`: This folder contains the `Person.cs` class that defines the model for the user data.
 - `ServiceFolder/`: This folder contains the `UserService.cs` class that provides the logic for managing user data.
 - `Properties/`: This folder contains the `launchSettings.json` file that specifies the settings for launching the API.
-- `wwwroot/`: This folder contains the static files for the API, including CSS and JS files used for front-end rendering.
+- `wwwroot/`: This folder contains the static files for the API, including `site.css` in the css/ subfolder, and `site.js` in the js/ subfolder, which are used for front-end rendering.
 
 ## Endpoints
 
