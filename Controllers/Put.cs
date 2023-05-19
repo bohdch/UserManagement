@@ -1,11 +1,11 @@
-// Define a static method called EditUser that handles updating an existing user
+// Define a static method called UpdateUser that handles updating an existing user
 internal static class Put {
     // Handles updating an existing user by Id
-    public static async Task EditUser(HttpRequest request, HttpResponse response, UserService userService){
+    public static async Task UpdateUser(HttpRequest request, HttpResponse response, UserService userService){
     
         try {
             // Read user data from the request body
-            var userData = await request.ReadFromJsonAsync<Person>();
+            var userData = await request.ReadFromJsonAsync<User>();
             if (userData != null) {
                 // Retrieve all users from the data source
                 var users = userService.RetrieveAllUsers();

@@ -1,5 +1,5 @@
-// Represents a person with basic personal information
-internal class Person {
+// Represents a user with basic personal information
+internal class User {
     public string Id {get;set;} = "";
     public string FirstName {get;set;} = "";
     public string LastName {get;set;} = "";

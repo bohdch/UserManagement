@@ -1,8 +1,8 @@
 // Function to get all users
  async function getUsers() { 
     try {
-         // Fetch data from the "/api/users" endpoint using GET method
-        const response = await fetch("/api/users", {
+         // Fetch data from the "/users" endpoint using GET method
+        const response = await fetch("/users", {
             method: "GET",
             headers: {"Accept" : "application/json"}
         });
@@ -47,22 +47,22 @@
 // Function to get details of a single user
 async function getUser(id){ 
     try {
-        // Fetch data for the specified user ID from the "/api/users/{id}" endpoint using GET method
-        const response = await fetch(`/api/users/${id}`, {
+        // Fetch data for the specified user ID from the "/users/{id}" endpoint using GET method
+        const response = await fetch(`/users/${id}`, {
             method: "GET",
             headers : {"Accept" : "application/json"}
         });
 
         if(response.ok){
             // If response is successful, get the data as JSON
-            const person = await response.json();
+            const user = await response.json();
 
             // Assign the data from JSON to the respective fields in the form
-            document.getElementById("userId").value = person.id;
-            document.getElementById("FirstName").value = person.firstName;
-            document.getElementById("LastName").value = person.lastName;
-            document.getElementById("userAge").value = person.age;
-            document.getElementById("Email").value = person.email;
+            document.getElementById("userId").value = user.id;
+            document.getElementById("FirstName").value = user.firstName;
+            document.getElementById("LastName").value = user.lastName;
+            document.getElementById("userAge").value = user.age;
+            document.getElementById("Email").value = user.email;
         } else {
             // Handle error response
             console.error("Failed to get user details:", response.status);
@@ -98,8 +98,8 @@ async function createUser() {
     };
 
     try {
-        // Fetch data from the "/api/users" endpoint using POST method with user data in the request body
-        const response = await fetch("/api/users", {
+        // Fetch data from the "/users" endpoint using POST method with user data in the request body
+        const response = await fetch("/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -111,9 +111,10 @@ async function createUser() {
             throw new Error(`HTTP error ${response.status}`);
         }
         
-        // Parse response, create new row, and append to table
+
         const newUser = await response.json();
         const newRow = row(newUser);
+
         document.querySelector("tbody").appendChild(newRow);
 
 
@@ -130,8 +131,8 @@ async function createUser() {
 
       
 
-// Function to edit/update a user
-async function editUser() {
+// Function to update a user
+async function updateUser() {
     // Get input values from form
     const id = document.getElementById("userId").value;
     const firstName = document.getElementById("FirstName").value;
@@ -149,14 +150,14 @@ async function editUser() {
     };
     
     try {
-        // Send PUT request to "/api/users" endpoint with user data in the request body
-        const response = await fetch("/api/users", {
+        // Send PUT request to "/users" endpoint with user data in the request body
+        const response = await fetch("/users", {
             method: "PUT",
             headers: { "Accept": "application/json", "Content-Type": "application/json" },
             body: JSON.stringify(userData),
         })
 
-        // If response is successful, replace the row for the edited user in the table
+        // If response is successful, replace the row for the updated user in the table
         if (response.ok === true) {
             const user = await response.json();
             document.querySelector(`tr[data-rowid='${user.id}']`).replaceWith(row(user));
@@ -175,8 +176,8 @@ async function editUser() {
 // Function to delete a user
 async function deleteUser(id){ 
     try {
-        // Fetch data from the "/api/users/{id}" endpoint using DELETE method
-        const response = await fetch(`/api/users/${id}`, {
+        // Fetch data from the "/users/{id}" endpoint using DELETE method
+        const response = await fetch(`/users/${id}`, {
             method: "DELETE",
             headers: {"Accept" : "application/json"}
         })
@@ -249,13 +250,13 @@ function row(user) {
 
     const linksTd = document.createElement("td");
 
-    // Create an edit button
-    const editLink = document.createElement("button"); 
-    editLink.append("Edit");
-    linksTd.append(editLink);
+    // Create an update button
+    const updateLink = document.createElement("button"); 
+    updateLink.append("Update");
+    linksTd.append(updateLink);
     
     // Event Handler for the 'Create' button
-    editLink.addEventListener("click", async() => await getUser(user.id));
+    updateLink.addEventListener("click", async() => await getUser(user.id));
     
     // Create a remove button
     const removeLink = document.createElement("button"); 

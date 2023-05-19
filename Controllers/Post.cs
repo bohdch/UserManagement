@@ -11,7 +11,7 @@ internal static class Post {
             var users = userService.RetrieveAllUsers();
 
             // Deserialize the user data from the request body
-            var user = await request.ReadFromJsonAsync<Person>();
+            var user = await request.ReadFromJsonAsync<User>();
 
             // If user data is not provided, return a 400 Bad Request response
             if (user is null)

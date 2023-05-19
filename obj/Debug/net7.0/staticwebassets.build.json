@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uq5vuCmDabbqEIkqALs85+wlPRxKHFHNTkOagyQWPYA=",
+  "Hash": "fY+qO7T+8MSAe32xM+mdHgrofpO+FXroy5irtbBZu+g=",
   "Source": "WebAPI",
   "BasePath": "_content/WebAPI",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "WebAPI\\wwwroot",
       "Source": "WebAPI",
-      "ContentRoot": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\UserManagementWebAPI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\wwwroot\\",
       "BasePath": "_content/WebAPI",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\UserManagementWebAPI\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\wwwroot\\css\\site.css",
       "SourceId": "WebAPI",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\UserManagementWebAPI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\wwwroot\\",
       "BasePath": "_content/WebAPI",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -34,10 +34,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\UserManagementWebAPI\\wwwroot\\js\\site.js",
+      "Identity": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\wwwroot\\js\\site.js",
       "SourceId": "WebAPI",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\UserManagementWebAPI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\wwwroot\\",
       "BasePath": "_content/WebAPI",
       "RelativePath": "js/site.js",
       "AssetKind": "All",

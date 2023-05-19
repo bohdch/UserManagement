@@ -12,13 +12,13 @@ internal static class Get
     public static async Task GetUser(string? id, HttpResponse response, UserService userService) 
     {
         var users = userService.RetrieveAllUsers();
-        Person? user = null;
+        User? user = null;
    
         // Loop through each user and find the one that matches the given ID
-        foreach (Person person in users){
-            if (person.Id == id)
+        foreach (User u in users){
+            if (u.Id == id)
             {
-                user = person;
+                user = u;
                 break;
             }
         }

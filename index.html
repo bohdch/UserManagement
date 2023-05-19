@@ -1,15 +1,15 @@
-<!--This is a HTML file for a CRUD Web API application-->
+<!--This is a HTML file for a CRUD Web Application-->
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Web API (CRUD)</title>
+        <title>Web App (CRUD)</title>
         <link rel="stylesheet" href="css/site.css"/>
     </head>
 </head>
 <body>
   <header>
-    <h1>Web API for User Management</h1>
+    <h1>Web App for User Management</h1>
   </header>
   <div class="container">
     <section>
@@ -68,8 +68,8 @@
           await createUser();
 
         } else {
-          // If user ID is provided, edit an existing user
-          await editUser();
+          // If user ID is provided, update an existing user
+          await updateUser();
         }
 
         reset(); 

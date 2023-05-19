@@ -5,13 +5,13 @@ internal static class Delete {
     
     // Retrieve all users from the data source
     var users = userService.RetrieveAllUsers();
-    Person? user = null;
+    User? user = null;
 
     // Find user from all users by Id
-    foreach (Person person in users){
-        if (person.Id == id)
+    foreach (User u in users){
+        if (u.Id == id)
         {
-            user = person;
+            user = u;
             break;
         }
     }
