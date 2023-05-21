@@ -2,37 +2,38 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 
-var userService = new UserService();
+var dbService = new DatabaseService();
 
 // Serve static files
 app.UseStaticFiles();
 
 
 
+
 // Endpoint for getting all users
 app.MapGet("/users", async (HttpContext context) =>
 {
-    await Get.GetAllUsers(context.Response, userService);
+    await Get.GetAllUsers(context.Response, dbService);
 });
 
 // Endpoint for getting a specific user
 app.MapGet("/users/{id}", async (HttpContext context, string id) =>{
-     await Get.GetUser(id,context.Response,userService);
+     await Get.GetUser(id,context.Response,dbService);
 });
 
 // Endpoint for creating a user
 app.MapPost("/users", async (HttpContext context) =>{
-    await Post.CreateUser(context.Request, context.Response, userService);
+    await Post.CreateUser(context.Request, context.Response, dbService);
 });
 
 // Endpoint for updating a user
- app.MapPut("/users", async (HttpContext context) => {
-     await Put.UpdateUser(context.Request, context.Response, userService);
+app.MapPut("/users", async (HttpContext context) => {
+    await Put.UpdateUser(context.Request, context.Response, dbService);
 });
 
 // Endpoint for deleting a user
 app.MapDelete("/users/{id}", async (HttpContext context, string id) => {
-    await Delete.DeleteUser(id,context.Response, userService);
+    await Delete.DeleteUser(id,context.Response, dbService);
 });
 
 

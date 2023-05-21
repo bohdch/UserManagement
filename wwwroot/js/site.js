@@ -117,7 +117,6 @@ async function createUser() {
 
         document.querySelector("tbody").appendChild(newRow);
 
-
         // Reload the page to remove the "no users" text row when a new user is added
         const TextElement = document.getElementById("text");
         if (TextElement){
@@ -184,8 +183,7 @@ async function deleteUser(id){
 
         // If response is successful, remove the row for the deleted user from the table
         if (response.ok) {
-            const user = await response.json();
-            document.querySelector(`tr[data-rowid='${user.id}']`).remove();
+            document.querySelector(`tr[data-rowid='${id}']`).remove();
 
             // If there are no users left, reload the page
             const rows = document.querySelectorAll("tbody tr");
@@ -223,13 +221,13 @@ function row(user) {
     const tr = document.createElement("tr");
     tr.setAttribute("data-rowid", user.id);
 
-    // Create a table cell for the user's FirstName
+    // Create a table cell for the user's First Name
     const FirsNameTd = document.createElement("td");
     FirsNameTd.append(user.firstName);
     tr.append(FirsNameTd);
 
 
-    // Create a table cell for the user's LastName
+    // Create a table cell for the user's Last Name
     const LastNameTd = document.createElement("td");
     LastNameTd.append(user.lastName);
     tr.append(LastNameTd);

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\WebAPI.csproj": {}
+    "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementApp\\WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\WebAPI.csproj": {
+    "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementApp\\WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementApp\\WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\WebAPI.csproj",
+        "projectPath": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementApp\\WebAPI.csproj",
         "packagesPath": "C:\\Users\\cumak\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementWebAPI\\obj\\",
+        "outputPath": "C:\\Users\\cumak\\OneDrive\\Робочий стіл\\ProjectChange\\UserManagementApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\cumak\\AppData\\Roaming\\NuGet\\NuGet.Config"
