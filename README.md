@@ -5,11 +5,11 @@ UserManagementApp is a basic CRUD (Create, Read, Update, Delete) app for managin
 ## Project Structure
 
 The project structure of UserManagementApp is as follows:
-- `Controllers/`: This folder contains the controller classes that define the endpoints, including `Delete.cs`, `Get.cs`, `Post.cs`, and `Put.cs`.
-- `Model/`: This folder contains the `User.cs` class that defines the model for the user data.
-- `ServiceFolder/`: This folder contains the `UserService.cs` class that provides the logic for managing user data.
-- `Properties/`: This folder contains the `launchSettings.json` file that specifies the settings for launching the app.
-- `wwwroot/`: This folder contains the static files for the app, including `site.css` in the css/ subfolder, and `site.js` in the js/ subfolder.
+- `DataAccess/`: This directory contains the classes responsible for accessing and interacting with the database, including `Delete.cs`, `Get.cs`, `Post.cs`, and `Put.cs`.
+- `Model/`: This directory contains the `User.cs` class that defines the model for the user data.
+- `ServiceFolder/`: This directory contains the `DatabaseService.cs` class that provides the connection to the database.
+- `Properties/`: This directory contains the `launchSettings.json` file that specifies the settings for launching the app.
+- `wwwroot/`: This directory contains the static files for the app, including `site.css` in the css/ subfolder, and `site.js` in the js/ subfolder.
 
 ## Endpoints
 
@@ -21,6 +21,17 @@ The following endpoints are available in UserManagementApp:
 - `PUT /users/{id}`: Update an existing user by ID.
 - `DELETE /users/{id}`: Delete a user by ID.
 
+## Running the Project
+
+In order to run the project, follow these steps:
+
+1. Ensure that you have .NET 7.0 SDK installed on your machine.
+2. Clone the project repository from the version control system of your choice.
+3. Open the project in your preferred IDE.
+4. Run the provided SQL script (e.g., `db_setup.sql`) using SSMS or CLI to create the database, tables, and procedures.
+5. Build the project using the command `dotnet build` to restore dependencies and compile the source code.
+6. Start the application using the command `dotnet run`
+
 ## Technologies Used
 
 UserManagementApp is built using the following technologies:
@@ -31,5 +42,6 @@ UserManagementApp is built using the following technologies:
 - HTML 
 - CSS 
 - JavaScript
+- ADO.NET
+- NuGet
 - RESTful API principles 
-
