@@ -28,7 +28,7 @@ In order to run the project, follow these steps:
 1. Ensure that you have .NET 7.0 SDK installed on your machine.
 2. Clone the project repository from the version control system of your choice.
 3. Open the project in your preferred IDE.
-4. Run the provided SQL script (e.g., `db_setup.sql`) using SSMS or CLI to create the database, tables, and procedures.
+4. Run the provided SQL script `db_setup.sql` using SSMS or CLI to create the database, tables, and procedures.
 5. Build the project using the command `dotnet build` to restore dependencies and compile the source code.
 6. Start the application using the command `dotnet run`
 
