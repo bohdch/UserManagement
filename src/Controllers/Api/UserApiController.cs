@@ -30,12 +30,27 @@ namespace UserManagement.Controllers.Api
             return Ok(user);
         }
 
-        // POST: /api/users
         [HttpPost]
         [Route("/users")]
-        public async Task CreateUser()
+        public async Task<IActionResult> CreateUser()
         {
-            await _userManagerService.CreateUser(Request, Response);
+            var createdUser = await _userManagerService.CreateUser(Request);
+            return Ok(createdUser);
+        }
+
+        [HttpPut]
+        [Route("/users")]
+        public async Task<IActionResult> UpdateUser()
+        {
+            var user = await _userManagerService.UpdateUser(Request);
+            return Ok(user);
+        }
+
+        [HttpDelete]
+        [Route("/users/{id}")]
+        public async Task DeleteUser(string? id)
+        {
+            await _userManagerService.DeleteUser(id);
         }
     }
 }

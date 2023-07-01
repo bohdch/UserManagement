@@ -10,9 +10,9 @@ namespace UserManagement.Services.Interfaces
     {
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetUser(string? id);
-        Task CreateUser(HttpRequest request, HttpResponse response);
-        Task UpdateUser(HttpRequest request, HttpResponse response);
-        Task DeleteUser(string? id, HttpResponse response);
+        Task<User> CreateUser(HttpRequest request);
+        Task<User> UpdateUser(HttpRequest request);
+        Task DeleteUser(string? id);
     }
 }
 

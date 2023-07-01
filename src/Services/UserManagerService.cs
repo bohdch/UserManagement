@@ -32,7 +32,7 @@ namespace UserManagement.Services
             return user;
         }
 
-        public async Task CreateUser(HttpRequest request, HttpResponse response)
+        public async Task<User> CreateUser(HttpRequest request)
         {
             var user = await request.ReadFromJsonAsync<User>();
 
@@ -40,76 +40,31 @@ namespace UserManagement.Services
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
 
-            // Return a 201 Created response with the new user data
-            response.StatusCode = 201;
-            await response.WriteAsJsonAsync(user);
+            return user;
         }
 
-        public async Task UpdateUser(HttpRequest request, HttpResponse response)
+        public async Task<User> UpdateUser(HttpRequest request)
         {
-            try
-            {
-                var userData = await request.ReadFromJsonAsync<User>();
+            var userData = await request.ReadFromJsonAsync<User>();
 
-                if (userData != null)
-                {
-                    User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userData.Id);
+            User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userData.Id);
 
-                    if (user != null)
-                    {
-                        user.FirstName = userData.FirstName;
-                        user.LastName = userData.LastName;
-                        user.Age = userData.Age;
-                        user.Email = userData.Email;
+            user.FirstName = userData.FirstName;
+            user.LastName = userData.LastName;
+            user.Age = userData.Age;
+            user.Email = userData.Email;
 
-                        await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
-                        await response.WriteAsJsonAsync(user);
-                    }
-                    else
-                    {
-                        response.StatusCode = 404;
-                        await response.WriteAsJsonAsync(new { message = "No user found" });
-                    }
-                }
-                else
-                {
-                    response.StatusCode = 400;
-                    await response.WriteAsync("Invalid user data.");
-                }
-            }
-            catch (Exception ex)
-            {
-                response.StatusCode = 500;
-                await response.WriteAsync("An error occurred while updating the user.");
-            }
+            return user;
         }
 
-        public async Task DeleteUser(string? id, HttpResponse response)
+        public async Task DeleteUser(string? id)
         {
-            try
-            {
-                User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-                if (user != null)
-                {
-                    _dbContext.Users.Remove(user);
-                    await _dbContext.SaveChangesAsync();
-
-                    response.StatusCode = 200;
-                    await response.WriteAsJsonAsync(new { message = "User deleted successfully" });
-                }
-                else
-                {
-                    response.StatusCode = 404;
-                    await response.WriteAsJsonAsync(new { message = "No user found" });
-                }
-            }
-            catch (Exception ex)
-            {
-                response.StatusCode = 500;
-                await response.WriteAsync("An error occurred while deleting the user.");
-            }
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
