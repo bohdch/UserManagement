@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\Data",
+    "\\src\\Services",
+    "\\src\\Services\\Interfaces"
+  ],
+  "SelectedNode": "\\src\\Services\\DatabaseService.cs",
+  "PreviewInSolutionExplorer": false
+}
