@@ -1,5 +1,4 @@
-// Function to get all users
- async function getUsers() { 
+async function getUsers() { 
     try {
          // Fetch data from the "/users" endpoint using GET method
         const response = await fetch("users", {
@@ -30,7 +29,7 @@
             rows.appendChild(noUsersRow);
 
         }
-        else{
+        else {
             // Iterate through the users and append a new row for each user
             users.forEach(user => {
                 rows.appendChild(row(user));
@@ -42,9 +41,6 @@
     }
 }
 
-
-
-// Function to get details of a single user
 async function getUser(id){ 
     try {
         // Fetch data for the specified user ID from the "/users/{id}" endpoint using GET method
@@ -53,7 +49,7 @@ async function getUser(id){
             headers : {"Accept" : "application/json"}
         });
 
-        if(response.ok){
+        if (response.ok){
             // If response is successful, get the data as JSON
             const user = await response.json();
 
@@ -64,32 +60,24 @@ async function getUser(id){
             document.getElementById("userAge").value = user.age;
             document.getElementById("Email").value = user.email;
         } else {
-            // Handle error response
             console.error("Failed to get user details:", response.status);
         }
     } catch(error){
-        // Handle any other errors
         console.error("Failed to get user details: ", error);
     }
 }
 
-
-
-
-// Function to create a new user
 async function createUser() {
     const FirstNameInput = document.getElementById("FirstName");
     const LastNameInput = document.getElementById("LastName");
     const userAgeInput = document.getElementById("userAge");
     const EmailInput = document.getElementById("Email");
 
-    // Check if all required fields are filled
     if (!FirstNameInput.value || !LastNameInput.value || !userAgeInput.value || !EmailInput.value) {
         alert("Please enter all required information.");
         return;
     }
 
-    // Create an object with user data
     const userData = {
         firstName: FirstNameInput.value,
         lastName: LastNameInput.value,
@@ -128,18 +116,13 @@ async function createUser() {
     }
 } 
 
-      
-
-// Function to update a user
 async function updateUser() {
-    // Get input values from form
     const id = document.getElementById("userId").value;
     const firstName = document.getElementById("FirstName").value;
     const lastName = document.getElementById("LastName").value;
     const userAge = parseInt(document.getElementById("userAge").value);
     const email = document.getElementById("Email").value;
 
-    // Create user data object
     const userData = {
         id : id,
         firstName: firstName,
@@ -170,9 +153,6 @@ async function updateUser() {
     }
 }
 
-
-
-// Function to delete a user
 async function deleteUser(id){ 
     try {
         // Fetch data from the "/users/{id}" endpoint using DELETE method
@@ -192,20 +172,14 @@ async function deleteUser(id){
             }
 
         } else {
-            // If response is unsuccessful, log the error to console
             const error = await response.json();
             console.error(error);
         }
-    } catch(error){
-        // Log the error to console
+    } catch (error) {
         console.error(error);
     }
 }
 
-
-
-
-// Reset data after submission 
 async function reset(){
     document.getElementById("userId").value = "";
     document.getElementById("FirstName").value = "";

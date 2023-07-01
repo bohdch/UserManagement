@@ -1,5 +1,4 @@
-﻿<!--This is a HTML file for a CRUD Web Application-->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,34 +11,26 @@
     </header>
     <div class="container">
         <section>
-            <!-- Hidden input for user ID -->
             <input id="userId" type="hidden" />
 
-            <!-- Input for first name -->
             <label for="FirstName">First Name</label>
             <input id="FirstName" type="text" />
 
-            <!-- Input for last name -->
             <label for="LastName">Last Name</label>
             <input id="LastName" type="text">
 
-            <!-- Input for age -->
             <label for="userAge">Age</label>
             <input id="userAge" type="number" />
 
-            <!-- Input for email -->
             <label for="Email">Email</label>
             <input id="Email" type="email" />
 
 
-            <!-- Button to save user data -->
             <button id="saveBtn" class="btn">Save</button>
 
-            <!-- Button to reset user data inputs -->
             <button id="resetBtn" class="btn" onclick="reset()">Reset</button>
         </section>
 
-        <!-- Table to display user data -->
         <table>
             <thead>
                 <tr>
