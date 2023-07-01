@@ -1,7 +1,7 @@
 async function getUsers() { 
     try {
          // Fetch data from the "/users" endpoint using GET method
-        const response = await fetch("users", {
+        const response = await fetch("/api/users", {
             method: "GET",
             headers: {"Accept" : "application/json"}
         });
@@ -44,7 +44,7 @@ async function getUsers() {
 async function getUser(id){ 
     try {
         // Fetch data for the specified user ID from the "/users/{id}" endpoint using GET method
-        const response = await fetch(`/users/${id}`, {
+        const response = await fetch(`/api/users/${id}`, {
             method: "GET",
             headers : {"Accept" : "application/json"}
         });
@@ -87,7 +87,7 @@ async function createUser() {
 
     try {
         // Fetch data from the "/users" endpoint using POST method with user data in the request body
-        const response = await fetch("/users", {
+        const response = await fetch("/api/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -133,7 +133,7 @@ async function updateUser() {
     
     try {
         // Send PUT request to "/users" endpoint with user data in the request body
-        const response = await fetch("/users", {
+        const response = await fetch("/api/users", {
             method: "PUT",
             headers: { "Accept": "application/json", "Content-Type": "application/json" },
             body: JSON.stringify(userData),
@@ -156,7 +156,7 @@ async function updateUser() {
 async function deleteUser(id){ 
     try {
         // Fetch data from the "/users/{id}" endpoint using DELETE method
-        const response = await fetch(`/users/${id}`, {
+        const response = await fetch(`/api/users/${id}`, {
             method: "DELETE",
             headers: {"Accept" : "application/json"}
         })
