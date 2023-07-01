@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UserManagement.Services;
 using UserManagement.Data;
 using UserManagement.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 internal static class Get
 {
@@ -16,6 +17,7 @@ internal static class Get
         {
             List<User> users = await dbContext.Users.ToListAsync();
             await response.WriteAsJsonAsync(users);
+            
         }
 
         catch (Exception ex)

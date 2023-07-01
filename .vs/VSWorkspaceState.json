@@ -2,10 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\Controllers",
     "\\src\\Data",
     "\\src\\Services",
     "\\src\\Services\\Interfaces"
   ],
-  "SelectedNode": "\\src\\Services\\DatabaseService.cs",
+  "SelectedNode": "\\src\\Controllers\\UserController.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -7,16 +7,12 @@ namespace UserManagement.Data
     public class UserManagementDbContext : DbContext
     {
         // Table
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; } = null!;
 
-        public UserManagementDbContext()
+        public UserManagementDbContext(DbContextOptions<UserManagementDbContext> options)
+                : base(options)
         {
-            Database.EnsureCreated();   
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost;Database = UserManagment;Trusted_Connection=True;TrustServerCertificate=True;");
+            Database.EnsureCreated();
         }
     }
 }

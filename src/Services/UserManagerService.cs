@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using UserManagement.Data;
 using UserManagement.Models;
 using UserManagement.Services.Interfaces;
-
+using UserManagement.Controllers;
 
 namespace UserManagement.Services
 {
@@ -20,69 +20,29 @@ namespace UserManagement.Services
             _dbContext = dbContext;
         }
 
-        public async Task GetAllUsers(HttpResponse response)
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
-            try
-            {
-                List<User> users = await _dbContext.Users.ToListAsync();
-                await response.WriteAsJsonAsync(users);
-            }
-            catch (Exception ex)
-            {
-                response.StatusCode = 500;
-                await response.WriteAsync("An error occurred while retrieving users.");
-            }
+            List<User> users = await _dbContext.Users.ToListAsync();
+            return users;
         }
 
-        public async Task GetUser(string? id, HttpResponse response)
+        public async Task<User> GetUser(string? id)
         {
-            try
-            {
-                User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-                if (user != null)
-                {
-                    await response.WriteAsJsonAsync(user);
-                }
-                else
-                {
-                    response.StatusCode = 404;
-                    await response.WriteAsJsonAsync(new { message = "No user found" });
-                }
-            }
-            catch (Exception ex)
-            {
-                response.StatusCode = 500;
-                await response.WriteAsync("An error occurred while retrieving the user.");
-            }
+            User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return user;
         }
 
         public async Task CreateUser(HttpRequest request, HttpResponse response)
         {
-            try
-            {
-                var user = await request.ReadFromJsonAsync<User>();
+            var user = await request.ReadFromJsonAsync<User>();
 
-                if (user != null)
-                {
-                    user.Id = Guid.NewGuid().ToString();
-                    _dbContext.Users.Add(user);
-                    await _dbContext.SaveChangesAsync();
+            user.Id = Guid.NewGuid().ToString();
+            _dbContext.Users.Add(user);
+            await _dbContext.SaveChangesAsync();
 
-                    response.StatusCode = 201;
-                    await response.WriteAsJsonAsync(user);
-                }
-                else
-                {
-                    response.StatusCode = 400;
-                    await response.WriteAsync("Invalid user data.");
-                }
-            }
-            catch (Exception ex)
-            {
-                response.StatusCode = 500;
-                await response.WriteAsync("An error occurred while creating the user.");
-            }
+            // Return a 201 Created response with the new user data
+            response.StatusCode = 201;
+            await response.WriteAsJsonAsync(user);
         }
 
         public async Task UpdateUser(HttpRequest request, HttpResponse response)

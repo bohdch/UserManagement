@@ -2,7 +2,7 @@
  async function getUsers() { 
     try {
          // Fetch data from the "/users" endpoint using GET method
-        const response = await fetch("/users", {
+        const response = await fetch("users", {
             method: "GET",
             headers: {"Accept" : "application/json"}
         });
@@ -82,7 +82,7 @@ async function createUser() {
     const LastNameInput = document.getElementById("LastName");
     const userAgeInput = document.getElementById("userAge");
     const EmailInput = document.getElementById("Email");
-    
+
     // Check if all required fields are filled
     if (!FirstNameInput.value || !LastNameInput.value || !userAgeInput.value || !EmailInput.value) {
         alert("Please enter all required information.");
@@ -94,7 +94,7 @@ async function createUser() {
         firstName: FirstNameInput.value,
         lastName: LastNameInput.value,
         age: parseInt(userAgeInput.value),
-        email : EmailInput.value
+        email: EmailInput.value
     };
 
     try {
@@ -110,7 +110,7 @@ async function createUser() {
         if (!response.ok) {
             throw new Error(`HTTP error ${response.status}`);
         }
-        
+
 
         const newUser = await response.json();
         const newRow = row(newUser);
@@ -119,7 +119,7 @@ async function createUser() {
 
         // Reload the page to remove the "no users" text row when a new user is added
         const TextElement = document.getElementById("text");
-        if (TextElement){
+        if (TextElement) {
             location.reload();
         }
 

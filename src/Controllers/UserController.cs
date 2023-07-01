@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace UserManagement.Controllers
 {
-	// TO DO - implement an MVC conttorller
-	public class UserController
+    public class UserController : Controller
     {
-
-	}
+        public IActionResult Index()
+        {
+            return View();
+        }
+    }
 }
