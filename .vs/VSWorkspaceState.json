@@ -1,12 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src",
-    "\\src\\Controllers",
-    "\\src\\Data",
-    "\\src\\Services",
-    "\\src\\Services\\Interfaces"
+    "\\src"
   ],
-  "SelectedNode": "\\src\\Controllers\\UserController.cs",
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
