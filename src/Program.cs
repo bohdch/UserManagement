@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using UserManagement.Services.Data;
-using UserManagement.Services.Data.Interfaces;
+using UserManagement.Services;
+using UserManagement.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using UserManagement.Models;
+using UserManagement.Data;
 
 public class Program
 {
@@ -12,36 +14,37 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         var app = builder.Build();
 
-        var dbService = new DatabaseService();
+        //var dbService = new DatabaseService();
+        var Efdb = new UserManagementDbContext();
 
         // Endpoint for getting all users
         app.MapGet("/users", async (HttpContext context) =>
         {
-            await Get.GetAllUsers(context.Response, dbService);
+            await Get.GetAllUsers(context.Response, Efdb);
         });
 
         // Endpoint for getting a specific user
         app.MapGet("/users/{id}", async (HttpContext context, string id) =>
         {
-            await Get.GetUser(id, context.Response, dbService);
+            await Get.GetUser(id, context.Response, Efdb);
         });
 
         // Endpoint for creating a user
         app.MapPost("/users", async (HttpContext context) =>
         {
-            await Post.CreateUser(context.Request, context.Response, dbService);
+            await Post.CreateUser(context.Request, context.Response, Efdb);
         });
 
         // Endpoint for updating a user
         app.MapPut("/users", async (HttpContext context) =>
         {
-            await Put.UpdateUser(context.Request, context.Response, dbService);
+            await Put.UpdateUser(context.Request, context.Response, Efdb);
         });
 
         // Endpoint for deleting a user
         app.MapDelete("/users/{id}", async (HttpContext context, string id) =>
         {
-            await Delete.DeleteUser(id, context.Response, dbService);
+            await Delete.DeleteUser(id, context.Response, Efdb);
         });
 
         app.UseStaticFiles();

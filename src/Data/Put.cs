@@ -1,46 +1,53 @@
-using System.Data.SqlClient;
-using UserManagement.Services.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
+using UserManagement.Data;
+using UserManagement.Models;
 
-// Define a static method called UpdateUser that handles updating an existing user
-internal static class Put {
-    // Handles updating an existing user by Id
-    public static async Task UpdateUser(HttpRequest request, HttpResponse response, DatabaseService dbService) {
-        try {
+internal static class Put
+{
+    public static async Task UpdateUser(HttpRequest request, HttpResponse response, UserManagementDbContext dbContext)
+    {
+        try
+        {
             // Read user data from the request body
             var userData = await request.ReadFromJsonAsync<User>();
 
-            if (userData != null) {
-                using (var connection = dbService.CreateConnection())
+            if (userData != null)
+            {
+                User user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userData.Id);
+
+                if (user != null)
                 {
-                    await connection.OpenAsync();
+                    user.FirstName = userData.FirstName;
+                    user.LastName = userData.LastName;
+                    user.Age = userData.Age;
+                    user.Email = userData.Email;
 
-                    using (var command = new SqlCommand("spUpdateUser", connection))
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        
-                        // Set the parameter values
-                        command.Parameters.AddWithValue("@FirstName", userData.FirstName);
-                        command.Parameters.AddWithValue("@LastName", userData.LastName);
-                        command.Parameters.AddWithValue("@Age", userData.Age);
-                        command.Parameters.AddWithValue("@Email", userData.Email);
-                        command.Parameters.AddWithValue("@Id", userData.Id);
-
-                        await command.ExecuteNonQueryAsync();
-                    }
+                    await dbContext.SaveChangesAsync();
 
                     // Return updated user data
-                    await response.WriteAsJsonAsync(userData);
+                    await response.WriteAsJsonAsync(user);
                 }
-            } else {
-                // Incorrect data received, return 404
-                response.StatusCode = 404;
-                await response.WriteAsJsonAsync(new { message = "No user found" });
+                else
+                {
+                    // User not found, return 404
+                    response.StatusCode = 404;
+                    await response.WriteAsJsonAsync(new { message = "No user found" });
+                }
             }
-        } catch {
-            // Error occurred while processing request, return 404
-            response.StatusCode = 404;
-            await response.WriteAsJsonAsync(new { message = "Incorrect data" });
+            else
+            {
+                // Incorrect data received, return 400
+                response.StatusCode = 400;
+                await response.WriteAsync("Invalid user data.");
+            }
+        }
+        catch (Exception ex)
+        {
+            response.StatusCode = 500;
+            await response.WriteAsync("An error occurred while updating the user.");
         }
     }
 }
-

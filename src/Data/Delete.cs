@@ -1,45 +1,37 @@
-using System.Data.SqlClient;
-using UserManagement.Services.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using UserManagement.Data;
+using UserManagement.Models;
 
-// This class contains a static method for deleting a user
 internal static class Delete
 {
-    // Method deletes an existing user by Id
-    public static async Task DeleteUser(string? id, HttpResponse response, DatabaseService dbService)
+    public static async Task DeleteUser(string? id, HttpResponse response, UserManagementDbContext dbContext)
     {
         try
         {
-            using (var connection = dbService.CreateConnection())
+            User user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user != null)
             {
-                await connection.OpenAsync();
+                dbContext.Users.Remove(user);
+                await dbContext.SaveChangesAsync();
 
-                using (var command = new SqlCommand("spDeleteUser", connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@Id", id);
-
-                    int rowsAffected = await command.ExecuteNonQueryAsync();
-
-                    if (rowsAffected > 0)
-                    {
-                        // User deleted successfully
-                        response.StatusCode = 200;
-                        await response.WriteAsJsonAsync(new { message = "User deleted successfully" });
-                    }
-                    else
-                    {
-                        // User not found, return 404
-                        response.StatusCode = 404;
-                        await response.WriteAsJsonAsync(new { message = "No user found" });
-                    }
-                }
+                response.StatusCode = 200;
+                await response.WriteAsJsonAsync(new { message = "User deleted successfully" });
+            }
+            else
+            {
+                response.StatusCode = 404;
+                await response.WriteAsJsonAsync(new { message = "No user found" });
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // Error occurred while processing request, return 404
-            response.StatusCode = 404;
-            await response.WriteAsJsonAsync(new { message = "Incorrect data" });
+            response.StatusCode = 500;
+            await response.WriteAsync("An error occurred while deleting the user.");
         }
     }
 }

@@ -1,47 +1,39 @@
-using System.Data.SqlClient;
-using UserManagement.Services.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
+using UserManagement.Data;
+using UserManagement.Models;
 
-// Define the Post class with a static method called CreateUser for creating a new user
 internal static class Post
 {
-    // Handle creating a new user based on data from the request body
-    public static async Task CreateUser(HttpRequest request, HttpResponse response, DatabaseService dbService)
+    public static async Task CreateUser(HttpRequest request, HttpResponse response, UserManagementDbContext dbContext)
     {
-        try {
-            using (SqlConnection connection = dbService.CreateConnection())
+        try
+        {
+            // Deserialize the user data from the request body
+            var user = await request.ReadFromJsonAsync<User>();
+
+            if (user != null)
             {
-                await connection.OpenAsync();
-
-                // Deserialize the user data from the request body
-                var user = await request.ReadFromJsonAsync<User>();
-
-                // Generate a new unique ID for the user
                 user.Id = Guid.NewGuid().ToString();
+                dbContext.Users.Add(user);
+                await dbContext.SaveChangesAsync();
 
-                using (SqlCommand command = new SqlCommand("spCreateUser", connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                    // Add the parameters for the stored procedure
-                    command.Parameters.AddWithValue("@Id", user.Id);
-                    command.Parameters.AddWithValue("@FirstName", user.FirstName);
-                    command.Parameters.AddWithValue("@LastName", user.LastName);
-                    command.Parameters.AddWithValue("@Age", user.Age);
-                    command.Parameters.AddWithValue("@Email", user.Email);
-
-                    await command.ExecuteNonQueryAsync();
-
-                    // Return a 201 Created response with the new user data
-                    response.StatusCode = 201;
-                    await response.WriteAsJsonAsync(user);
-                }
+                // Return a 201 Created response with the new user data
+                response.StatusCode = 201;
+                await response.WriteAsJsonAsync(user);
             }
-        } catch (Exception ex)
+            else
+            {
+                response.StatusCode = 400;
+                await response.WriteAsync("Invalid user data.");
+            }
+        }
+        catch (Exception ex)
         {
             response.StatusCode = 500;
             await response.WriteAsync("An error occurred while creating the user.");
         }
     }
 }
-
-
