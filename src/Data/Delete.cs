@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UserManagement.Data;
 using UserManagement.Models;
+using UserManagement.Services.Interfaces;
 
 internal static class Delete
 {

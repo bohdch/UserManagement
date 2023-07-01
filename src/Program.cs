@@ -17,6 +17,9 @@ public class Program
         //var dbService = new DatabaseService();
         var Efdb = new UserManagementDbContext();
 
+        //IUserManagerService userManagerService = app.Services.GetService<IUserManagerService>();
+
+
         // Endpoint for getting all users
         app.MapGet("/users", async (HttpContext context) =>
         {
