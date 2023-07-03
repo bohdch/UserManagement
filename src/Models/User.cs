@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace UserManagement.Models
@@ -7,14 +8,30 @@ namespace UserManagement.Models
         [Key]
         public string Id { get; set; }
 
-        public string FirstName { get; set; }
+        // TO DO - implement an image filed
+       
 
-        public string LastName { get; set; }
+        private string _name;
 
-        public int Age { get; set; }
+        [Required]
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value?.Trim(); }
+        }
 
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
+        public string Phone { get; set; }
+
+        [Required]
         public string Password { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public bool Verified { get; set; }
     }
 }

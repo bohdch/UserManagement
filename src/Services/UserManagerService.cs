@@ -49,10 +49,11 @@ namespace UserManagement.Services
 
             User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userData.Id);
 
-            user.FirstName = userData.FirstName;
-            user.LastName = userData.LastName;
-            user.Age = userData.Age;
+            user.Name = userData.Name;
             user.Email = userData.Email;
+            user.Phone = userData.Phone;
+            user.CreatedAt = userData.CreatedAt;
+            user.Verified = userData.Verified;
 
             await _dbContext.SaveChangesAsync();
 
