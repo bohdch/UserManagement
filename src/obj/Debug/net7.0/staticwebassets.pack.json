@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "D:\\Projects\\CSharp\\ASP.NET\\UserManagementApp\\src\\wwwroot\\css\\UserAuth.css",
+      "PackagePath": "staticwebassets\\css\\UserAuth.css"
+    },
+    {
       "Id": "D:\\Projects\\CSharp\\ASP.NET\\UserManagementApp\\src\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

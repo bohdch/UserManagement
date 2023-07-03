@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="css/UserAuth.css">
+    <style>
+    .error-message {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .error-message ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form action="/signin" method="post">
+        <h3>Please sign in</h3>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+        <div class="error-message">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                <li>@error.ErrorMessage</li>
+                    }
+            </ul>
+        </div>
+        }
+
+        <label for="email">Email</label>
+        <input type="text" placeholder="Email" id="email" name="email">
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password" name="password">
+
+        <br />
+        <a href="#">Forgot password?</a>
+
+        <div>
+            <button>Sign In</button>
+            <p>New to the System?<a href="/signup">Join Now</a></p>
+        </div>
+    </form>
+</body>
+</html>

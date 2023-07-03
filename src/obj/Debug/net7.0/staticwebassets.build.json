@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "CpCwzb2pXua9zu96T5iyOPviGskNbX/pn7g0+7UkorM=",
+  "Hash": "QcVYBW095dqJ6CAfEgcxrQSCA32oAx/4hHqw15eop9A=",
   "Source": "WebApp",
   "BasePath": "_content/WebApp",
   "Mode": "Default",
@@ -32,6 +32,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "D:\\Projects\\CSharp\\ASP.NET\\UserManagementApp\\src\\wwwroot\\css\\UserAuth.css",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\CSharp\\ASP.NET\\UserManagementApp\\src\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "css/UserAuth.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\UserAuth.css"
     },
     {
       "Identity": "D:\\Projects\\CSharp\\ASP.NET\\UserManagementApp\\src\\wwwroot\\js\\site.js",

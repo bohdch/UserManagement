@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using UserManagement.Models;
 using UserManagement.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
 
 public class Program
 {
@@ -27,15 +30,27 @@ public class Program
         });
 
         services.AddTransient<IUserManagerService, UserManagerService>();
+        services.AddTransient<IUserAuthService, UserAuthService>();
         services.AddControllersWithViews();
+        services.AddHttpContextAccessor(); 
+
+        // Auth based on cookies
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options => options.LoginPath = "/");
+        services.AddAuthorization();
     }
 
     private static void Configure(WebApplication app)
     {
+        app.UseDefaultFiles();
         app.UseStaticFiles();
 
         app.UseRouting();
 
-        app.MapControllerRoute("default", "{controller=User}/{action=Index}/{id?}");
+        // Add authentication and authorization middleware
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllerRoute("default", "{controller=UserAuth}/{action=Index}/{id?}");
     }
 }
