@@ -32,11 +32,10 @@ namespace UserManagement.Services
             return user;
         }
 
-        public async Task<User> CreateUser(HttpRequest request)
+        public async Task<User> CreateUser(User user)
         {
-            var user = await request.ReadFromJsonAsync<User>();
-
             user.Id = Guid.NewGuid().ToString();
+            user.CreatedAt = DateTime.Now;
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
 

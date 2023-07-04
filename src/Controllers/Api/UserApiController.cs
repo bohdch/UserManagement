@@ -1,13 +1,15 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using UserManagement.Services.Interfaces;
 using System.Threading.Tasks;
+using UserManagement.Services.Interfaces.Api;
+using UserManagement.Services.Interfaces;
+using UserManagement.Models;
 
 namespace UserManagement.Controllers.Api
 {
     [Route("/api/users")]
     [ApiController]
-    public class UserApiController : ControllerBase
+    public class UserApiController : ControllerBase, IUserApiController
     {
         private readonly IUserManagerService _userManagerService;
 
@@ -31,9 +33,9 @@ namespace UserManagement.Controllers.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser()
+        public async Task<IActionResult> CreateUser([FromBody] User user)
         {
-            var createdUser = await _userManagerService.CreateUser(Request);
+            var createdUser = await _userManagerService.CreateUser(user);
             return Ok(createdUser);
         }
 

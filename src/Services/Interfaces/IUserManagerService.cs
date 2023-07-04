@@ -1,8 +1,5 @@
-﻿using UserManagement.Services;
-using System.Data.SqlClient;
-using System;
-using UserManagement.Data;
-using UserManagement.Models;
+﻿using UserManagement.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UserManagement.Services.Interfaces 
 {
@@ -10,7 +7,7 @@ namespace UserManagement.Services.Interfaces
     {
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetUser(string? id);
-        Task<User> CreateUser(HttpRequest request);
+        Task<User> CreateUser([FromBody] User user);
         Task<User> UpdateUser(HttpRequest request);
         Task DeleteUser(string? id);
     }

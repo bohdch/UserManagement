@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using UserManagement.Services;
-using UserManagement.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using UserManagement.Models;
-using UserManagement.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using UserManagement.Services;
+using UserManagement.Services.Interfaces;
+using UserManagement.Services.Interfaces.Api;
+using UserManagement.Models;
+using UserManagement.Data;
+using UserManagement.Controllers.Api;
 
 public class Program
 {
@@ -31,8 +33,10 @@ public class Program
 
         services.AddTransient<IUserManagerService, UserManagerService>();
         services.AddTransient<IUserAuthService, UserAuthService>();
+        services.AddTransient<IUserApiController, UserApiController>();
+
         services.AddControllersWithViews();
-        services.AddHttpContextAccessor(); 
+        services.AddHttpContextAccessor();
 
         // Auth based on cookies
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -47,7 +51,6 @@ public class Program
 
         app.UseRouting();
 
-        // Add authentication and authorization middleware
         app.UseAuthentication();
         app.UseAuthorization();
 

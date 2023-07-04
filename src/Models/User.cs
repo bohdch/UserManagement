@@ -8,7 +8,7 @@ namespace UserManagement.Models
         [Key]
         public string Id { get; set; }
 
-        // TO DO - implement an image filed
+        // TO DO - implement an image field
        
 
         private string _name;
@@ -25,13 +25,13 @@ namespace UserManagement.Models
         public string Email { get; set; }
 
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         [Required]
         public string Password { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
-        public bool Verified { get; set; }
+        public bool Verified { get; set; } = false;
     }
 }

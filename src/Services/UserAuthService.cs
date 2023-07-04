@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -42,11 +41,6 @@ namespace UserManagement.Services
             _httpContextAccessor.HttpContext.Response.Cookies.Append("name", user.Email);
 
             return new RedirectToActionResult("Index", "UserHome", null);
-        }
-
-        public IActionResult SignUp()
-        {
-            return new OkObjectResult(new { message = "Sign-Up successful" });
         }
     }
 }

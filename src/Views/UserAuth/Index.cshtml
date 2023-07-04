@@ -1,24 +1,69 @@
-﻿@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Login Form</title>
+    <title>User Form</title>
     <link rel="stylesheet" href="css/UserAuth.css">
     <style>
-    .error-message {
-        text-align: center;
-        margin-bottom: 10px;
-    }
+        .error-message {
+            text-align: center;
+            margin-bottom: 10px;
+        }
 
-    .error-message ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+        .error-message ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Style for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Style for the sign-up form */
+        .signup-form label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        /* Style for the close button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            background-color: transparent;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close::before,
+        .close::after {
+            content: "";
+            position: absolute;
+            width: 2px;
+            height: 15px;
+            background-color: #fff;
+        }
+
+        .close::before {
+            transform: rotate(45deg);
+        }
+
+        .close::after {
+            transform: rotate(-45deg);
+        }
     </style>
 </head>
 <body>
@@ -26,7 +71,7 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form action="/signin" method="post">
+    <form action="/signin" method="post" class="signin-form">
         <h3>Please sign in</h3>
 
         @if (!ViewData.ModelState.IsValid)
@@ -48,12 +93,51 @@
         <input type="password" placeholder="Password" id="password" name="password">
 
         <br />
-        <a href="#">Forgot password?</a>
+        <a href="#" id="join-now-link">Forgot password?</a>
 
         <div>
             <button>Sign In</button>
-            <p>New to the System?<a href="/signup">Join Now</a></p>
+            <p>New to the System?<a href="#signup-modal" id="open-signup-modal"> Join Now</a></p>
         </div>
     </form>
+
+    <!-- The sign-up modal -->
+    <div id="signup-modal" class="modal">
+        <h3>Sign Up</h3>
+        <form action="/signup" method="post" class="signup-form">
+            <h3>Please sign up</h3>
+
+            <label for="name">Name</label>
+            <input type="text" placeholder="Full Name" id="name" name="name">
+
+            <label for="email">Email</label>
+            <input type="text" placeholder="Email" id="email" name="email">
+
+            <label for="password">Password</label>
+            <input type="password" placeholder="Password" id="password" name="password">
+
+            <button class="close" type="button"></button>
+            <button class="signup-button">Sign Up</button>
+        </form>
+    </div>
+    <script>
+        // TO DO: Implement validation methods
+
+        const signupModal = document.getElementById("signup-modal");
+        const closeBtn = signupModal.querySelector(".close");
+
+        // Function to open the sign-up modal
+        function openSignupModal() {
+            signupModal.style.display = "block";
+        }
+
+        // Function to close the sign-up modal
+        function closeSignupModal() {
+            signupModal.style.display = "none";
+        }
+
+        document.getElementById("open-signup-modal").addEventListener("click", openSignupModal);
+        closeBtn.addEventListener("click", closeSignupModal);
+    </script>
 </body>
 </html>

@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Text;
+using System.Text.Json;
 using UserManagement.Models;
 using UserManagement.Data;
 using System.Linq;
@@ -8,20 +11,21 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using UserManagement.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using UserManagement.Services.Interfaces.Api;
 
 namespace UserManagement.Controllers
 {
-    // Class that sends a page for user authentication
     public class UserAuthController : Controller
     {
         private readonly UserManagementDbContext _dbContext;
         private readonly IUserAuthService _userAuthService;
+        private readonly IUserApiController _userApiController;
 
-        public UserAuthController(UserManagementDbContext dbContext, IUserAuthService userAuthService)
+        public UserAuthController(UserManagementDbContext dbContext, IUserAuthService userAuthService, IUserApiController userApiController)
         {
             _dbContext = dbContext;
             _userAuthService = userAuthService;
+            _userApiController = userApiController;
         }
 
         public IActionResult Index()
@@ -47,9 +51,19 @@ namespace UserManagement.Controllers
         }
 
         [HttpPost("/signup")]
-        public IActionResult SignUp()
+        public async Task<IActionResult> SignUp(string name, string email, string password)
         {
-            return _userAuthService.SignUp();
+            var newUser = new User
+            {
+                Name = name,
+                Email = email,
+                Password = password,
+            };
+
+            await _userApiController.CreateUser(newUser);
+
+            // Sign in to the user page after user registration
+            return await _userAuthService.SignIn(email, password);
         }
     }
 }
