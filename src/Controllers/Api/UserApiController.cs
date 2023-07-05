@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using UserManagement.Services.Interfaces.Api;
+using UserManagement.Services.Interfaces;
 using UserManagement.Services.Interfaces;
 using UserManagement.Models;
 

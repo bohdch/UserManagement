@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using UserManagement.Services.Interfaces;
-using UserManagement.Services.Interfaces.Api;
+using UserManagement.Controllers.Api;
 
 namespace UserManagement.Controllers
 {

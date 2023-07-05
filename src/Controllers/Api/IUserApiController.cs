@@ -1,7 +1,7 @@
 ﻿using UserManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace UserManagement.Services.Interfaces.Api
+namespace UserManagement.Controllers.Api
 {
     public interface IUserApiController
     {

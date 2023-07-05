@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Services;
 using UserManagement.Services.Interfaces;
-using UserManagement.Services.Interfaces.Api;
 using UserManagement.Models;
 using UserManagement.Data;
 using UserManagement.Controllers.Api;
