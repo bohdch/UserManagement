@@ -34,9 +34,9 @@ namespace UserManagement.Services
             }
 
             var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Email) };
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "UserAuth");
 
-            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+            await _httpContextAccessor.HttpContext.SignInAsync("UserAuth", new ClaimsPrincipal(claimsIdentity));
 
             _httpContextAccessor.HttpContext.Response.Cookies.Append("name", user.Email);
 

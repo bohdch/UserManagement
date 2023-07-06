@@ -37,10 +37,21 @@ public class Program
         services.AddControllersWithViews();
         services.AddHttpContextAccessor();
 
-        // Auth based on cookies
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options => options.LoginPath = "/");
-        services.AddAuthorization();
+        // User authentication based on cookies
+        services.AddAuthentication("UserAuth")
+            .AddCookie("UserAuth", options =>
+            {
+                options.Cookie.Name = "UserCookie";
+                options.LoginPath = "/";
+            });
+
+        // Admin authentication based on cookies
+        services.AddAuthentication("AdminAuth")
+            .AddCookie("AdminAuth", options =>
+            {
+                options.Cookie.Name = "AdminCookie";
+                options.LoginPath = "/admin";
+            });
     }
 
     private static void Configure(WebApplication app)
@@ -50,6 +61,7 @@ public class Program
 
         app.UseRouting();
 
+        app.UseCookiePolicy();
         app.UseAuthentication();
         app.UseAuthorization();
 
