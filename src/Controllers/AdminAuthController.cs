@@ -40,7 +40,7 @@ namespace UserManagement.Controllers
 
                 await HttpContext.SignInAsync("AdminAuth", principal); 
 
-                return RedirectToAction("Index", "User");
+                return RedirectToAction("Index", "AdminHome");
             }
             else
             {
