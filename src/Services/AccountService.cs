@@ -13,12 +13,12 @@ using UserManagement.Services.Interfaces;
 
 namespace UserManagement.Services
 {
-    public class UserAuthService : IUserAuthService
+    public class AccountService : IAccountService
     {
         private readonly UserManagementDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserAuthService(UserManagementDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+        public AccountService(UserManagementDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
             _httpContextAccessor = httpContextAccessor;
@@ -34,9 +34,9 @@ namespace UserManagement.Services
             }
 
             var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Email) };
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "UserAuth");
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "UserAccount");
 
-            await _httpContextAccessor.HttpContext.SignInAsync("UserAuth", new ClaimsPrincipal(claimsIdentity));
+            await _httpContextAccessor.HttpContext.SignInAsync("UserAccount", new ClaimsPrincipal(claimsIdentity));
 
             _httpContextAccessor.HttpContext.Response.Cookies.Append("name", user.Email);
 

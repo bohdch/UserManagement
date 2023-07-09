@@ -31,23 +31,23 @@ public class Program
         });
 
         services.AddTransient<IUserManagerService, UserManagerService>();
-        services.AddTransient<IUserAuthService, UserAuthService>();
+        services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<IUserApiController, UserApiController>();
 
         services.AddControllersWithViews();
         services.AddHttpContextAccessor();
 
         // User authentication based on cookies
-        services.AddAuthentication("UserAuth")
-            .AddCookie("UserAuth", options =>
+        services.AddAuthentication("UserAccount")
+            .AddCookie("UserAccount", options =>
             {
                 options.Cookie.Name = "UserCookie";
                 options.LoginPath = "/";
             });
 
         // Admin authentication based on cookies
-        services.AddAuthentication("AdminAuth")
-            .AddCookie("AdminAuth", options =>
+        services.AddAuthentication("AdminAccount")
+            .AddCookie("AdminAccount", options =>
             {
                 options.Cookie.Name = "AdminCookie";
                 options.LoginPath = "/admin";
@@ -65,6 +65,12 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MapControllerRoute("default", "{controller=UserAuth}/{action=Index}/{id?}");
+        // routing for users
+        app.MapControllerRoute("default", "{controller=Account}/{action=Index}/{id?}");
+
+        // routing for the admin
+        app.MapControllerRoute(
+            name: "Admin",
+            pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
     }
 }

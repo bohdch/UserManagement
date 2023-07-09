@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace UserManagement.Controllers
 {
-    [Authorize(AuthenticationSchemes = "UserAuth")]
+    [Authorize(AuthenticationSchemes = "UserAccount")]
     public class UserHomeController : Controller
     {
         [HttpGet]
@@ -24,8 +24,8 @@ namespace UserManagement.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync("UserAuth"); 
-            return RedirectToAction("Index", "UserAuth");
+            await HttpContext.SignOutAsync("UserAccount"); 
+            return RedirectToAction("Index", "Account");
         }
     }
 }

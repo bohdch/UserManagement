@@ -15,16 +15,16 @@ using UserManagement.Controllers.Api;
 
 namespace UserManagement.Controllers
 {
-    public class UserAuthController : Controller
+    public class AccountController : Controller
     {
         private readonly UserManagementDbContext _dbContext;
-        private readonly IUserAuthService _userAuthService;
+        private readonly IAccountService _accountService;
         private readonly IUserApiController _userApiController;
 
-        public UserAuthController(UserManagementDbContext dbContext, IUserAuthService userAuthService, IUserApiController userApiController)
+        public AccountController(UserManagementDbContext dbContext, IAccountService userAuthService, IUserApiController userApiController)
         {
             _dbContext = dbContext;
-            _userAuthService = userAuthService;
+            _accountService = userAuthService;
             _userApiController = userApiController;
         }
 
@@ -41,7 +41,7 @@ namespace UserManagement.Controllers
 
             try
             {
-                return await _userAuthService.SignIn(email, password);
+                return await _accountService.SignIn(email, password);
             }
             catch (InvalidOperationException ex)
             {
@@ -63,7 +63,7 @@ namespace UserManagement.Controllers
             await _userApiController.CreateUser(newUser);
 
             // Sign in to the user page after user registration
-            return await _userAuthService.SignIn(email, password);
+            return await _accountService.SignIn(email, password);
         }
     }
 }

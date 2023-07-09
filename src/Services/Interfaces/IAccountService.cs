@@ -2,7 +2,7 @@
 
 namespace UserManagement.Services.Interfaces
 {
-    public interface IUserAuthService
+    public interface IAccountService
     {
         Task<IActionResult> SignIn(string email, string password);
     }

@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace UserManagement.Controllers
 {
-    [Authorize(AuthenticationSchemes = "AdminAuth")]
-    public class UserController : Controller
+    [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "AdminAccount")]
+    public class UsersController : Controller
     {
         public IActionResult Index()
         {

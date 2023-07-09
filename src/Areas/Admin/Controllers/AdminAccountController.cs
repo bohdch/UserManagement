@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Models;
 
-
 namespace UserManagement.Controllers
 {
-	public class AdminAuthController : Controller
+    [Area("Admin")]
+    public class AdminAccountController : Controller
     {
         [Route("/admin")]
         public IActionResult Index()
@@ -32,19 +32,19 @@ namespace UserManagement.Controllers
                 var claims = new[]
                  {
                     new Claim(ClaimTypes.Name, name),
-                    new Claim(ClaimTypes.Role, "Admin")
                 };
 
-                var identity = new ClaimsIdentity(claims, "AdminAuth");
+                var identity = new ClaimsIdentity(claims, "AdminAccount");
                 var principal = new ClaimsPrincipal(identity);
 
-                await HttpContext.SignInAsync("AdminAuth", principal); 
+                await HttpContext.SignInAsync("AdminAccount", principal);
 
-                return RedirectToAction("Index", "AdminHome");
+                return Redirect("~/Admin/Dashboard");
+
             }
             else
             {
-                return RedirectToAction("Index", "AdminAuth");
+                return RedirectToAction("Index", "AdminAccount");
             }
         }
     }
