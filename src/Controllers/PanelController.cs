@@ -16,9 +16,10 @@ namespace UserManagement.Controllers
         [Route("{controller}/{action=Home}")]
         public IActionResult Home()
         {
-            string userEmail = HttpContext.User.Identity.Name;
+            string userName = HttpContext.User.Identity.Name;
+            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var model = new User { Email = userEmail };
+            var model = new User { Name = userName, Id = userId};
             return View(model);
         }
 

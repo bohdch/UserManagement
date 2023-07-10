@@ -33,12 +33,14 @@ namespace UserManagement.Services
                 throw new InvalidOperationException("Invalid email or password, try again");
             }
 
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Email) };
+            var claims = new List<Claim> {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+            };
+
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "UserAccount");
 
             await _httpContextAccessor.HttpContext.SignInAsync("UserAccount", new ClaimsPrincipal(claimsIdentity));
-
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("name", user.Email);
 
             return new RedirectToActionResult("Home", "Panel", null);
         }
