@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
@@ -11,10 +11,10 @@ using Microsoft.AspNetCore.Authorization;
 namespace UserManagement.Controllers
 {
     [Authorize(AuthenticationSchemes = "UserAccount")]
-    public class UserHomeController : Controller
+    public class PanelController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
+        [Route("{controller}/{action=Home}")]
+        public IActionResult Home()
         {
             string userEmail = HttpContext.User.Identity.Name;
 
@@ -24,7 +24,7 @@ namespace UserManagement.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync("UserAccount"); 
+            await HttpContext.SignOutAsync("UserAccount");
             return RedirectToAction("Index", "Account");
         }
     }

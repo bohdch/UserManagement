@@ -12,7 +12,7 @@ namespace UserManagement.Controllers
     [Area("Admin")]
     public class AdminAccountController : Controller
     {
-        [Route("/admin")]
+        [Route("/Admin")]
         public IActionResult Index()
         {
             return View();
@@ -39,7 +39,7 @@ namespace UserManagement.Controllers
 
                 await HttpContext.SignInAsync("AdminAccount", principal);
 
-                return Redirect("~/Admin/Dashboard");
+                return Redirect("/Admin/AdminPanel");
 
             }
             else

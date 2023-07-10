@@ -5,9 +5,14 @@ namespace UserManagement.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "AdminAccount")]
-    public class DashboardController : Controller
+    public class AdminPanelController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public IActionResult Users()
         {
             return View();
         }

@@ -40,7 +40,7 @@ namespace UserManagement.Services
 
             _httpContextAccessor.HttpContext.Response.Cookies.Append("name", user.Email);
 
-            return new RedirectToActionResult("Index", "UserHome", null);
+            return new RedirectToActionResult("Home", "Panel", null);
         }
     }
 }

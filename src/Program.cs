@@ -50,7 +50,7 @@ public class Program
             .AddCookie("AdminAccount", options =>
             {
                 options.Cookie.Name = "AdminCookie";
-                options.LoginPath = "/admin";
+                options.LoginPath = "/Admin";
             });
     }
 
@@ -71,6 +71,6 @@ public class Program
         // routing for the admin
         app.MapControllerRoute(
             name: "Admin",
-            pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+            pattern: "{area:exists}/{controller=AdminPanel}/{action=Dashboard}/{id?}");
     }
 }
