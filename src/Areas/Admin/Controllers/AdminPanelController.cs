@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace UserManagement.Controllers
 {
@@ -15,6 +17,12 @@ namespace UserManagement.Controllers
         public IActionResult Users()
         {
             return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync("AdminAccount");
+            return RedirectToAction("Index", "AdminAccount");
         }
     }
 }
