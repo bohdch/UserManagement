@@ -1,15 +1,52 @@
+@using UserManagement.Data
+@using UserManagement.Models
+@using System.Linq;
+
+@inject UserManagementDbContext dbContext
+
 @{
     Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    // Retrieve the count of total users
+    int totalUsersCount = dbContext.Users.Count();
+
+    // Retrieve the count of users created yesterday
+    int usersCreatedYesterdayCount = dbContext.Users.Count(u => u.CreatedAt >= DateTime.Now.Date.AddDays(-1) && u.CreatedAt < DateTime.Now.Date);
+
+
+    // Retrive the count of users created today
+    DateTime todayStart = DateTime.Now.Date;
+    DateTime todayEnd = todayStart.AddDays(1);
+
+    int userCreatedTodayCount = dbContext.Users.Count(u => u.CreatedAt >= todayStart && u.CreatedAt < todayEnd);
 }
+
 <div class="home-content">
     <div class="overview-boxes">
         <div class="box">
             <div class="right-side">
                 <div class="box-topic">Total Users</div>
-                <div class="number">0</div>
+                <div class="number">
+                    @totalUsersCount
+                </div>
                 <div class="indicator">
-                    <i class='bx bx-up-arrow-alt'></i>
-                    <span class="text">Up from yesterday</span>
+                    @if (usersCreatedYesterdayCount < userCreatedTodayCount)
+                    {
+                        <i class='bx bx-up-arrow-alt arrow'></i>
+                        <span class="text">More registrations today</span>
+                    }
+
+                    else if (usersCreatedYesterdayCount > userCreatedTodayCount)
+                    {
+                        <i class='bx bx-down-arrow-alt down'></i>
+                        <span class="text">More registrations yesterday</span>
+                    }
+
+                    else
+                    {
+                        <i class='bx bxs-minus-circle arrow'></i>
+                        <span class="text">Same number of registrations</span>
+                    }
                 </div>
             </div>
             <i class='bx bxs-group users'></i>
@@ -20,7 +57,7 @@
                 <div class="number">0</div>
                 <div class="indicator">
                     <i class='bx bx-up-arrow-alt'></i>
-                    <span class="text">Up from yesterday</span>
+                    <span class="text">More notes yesterday</span>
                 </div>
             </div>
             <i class='bx bxs-note users'></i>
@@ -31,7 +68,7 @@
                 <div class="number">0</div>
                 <div class="indicator">
                     <i class='bx bx-up-arrow-alt'></i>
-                    <span class="text">Up from yesterday</span>
+                    <span class="text">More notifications yesterday</span>
                 </div>
             </div>
             <i class='bx bxs-bell users'></i>
@@ -42,7 +79,7 @@
                 <div class="number">0</div>
                 <div class="indicator">
                     <i class='bx bx-down-arrow-alt down'></i>
-                    <span class="text">Down From Today</span>
+                    <span class="text">More verifications yesterday</span>
                 </div>
             </div>
             <i class='bx bxs-user-check users'></i>
