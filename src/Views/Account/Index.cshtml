@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>User Form</title>
     <link rel="stylesheet" href="css/Account.css">
     <style>
@@ -16,11 +16,9 @@
             margin: 0;
         }
 
-        /* Style for the modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
@@ -28,13 +26,11 @@
             background-color: rgba(0, 0, 0, 0.5);
         }
 
-        /* Style for the sign-up form */
         .signup-form label {
             margin-top: 10px;
             display: block;
         }
 
-        /* Style for the close button */
         .close {
             position: absolute;
             top: 10px;
@@ -68,76 +64,80 @@
 </head>
 <body>
     <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
     </div>
-    <form action="/signin" method="post" class="signin-form">
-        <h3>Please sign in</h3>
 
-        @if (!ViewData.ModelState.IsValid)
-        {
-        <div class="error-message">
-            <ul>
-                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                    {
-                <li>@error.ErrorMessage</li>
-                    }
-            </ul>
-        </div>
-        }
+    <div id="signin-form-container">
+        <form action="/signin" method="post" class="signin-form">
+            <h3>Please sign in</h3>
 
-        <label for="email">Email</label>
-        <input type="text" placeholder="Email" id="email" name="email">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="error-message">
+                    <ul>
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                        <li>@error.ErrorMessage</li>
+                            }
+                    </ul>
+                </div>
+            }
 
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password" name="password">
+            <label for="email">Email</label>
+            <input type="text" placeholder="Email" id="email" name="email" required>
 
-        <br />
-        <a href="#" id="join-now-link">Forgot password?</a>
+            <label for="password">Password</label>
+            <input type="password" placeholder="Password" id="password" name="password" required>
 
-        <div>
-            <button>Sign In</button>
-            <p>New to the System?<a href="#signup-modal" id="open-signup-modal"> Join Now</a></p>
-        </div>
-    </form>
+            <br />
+            <a href="#">Forgot password?</a>
 
-    <!-- The sign-up modal -->
-    <div id="signup-modal" class="modal">
-        <h3>Sign Up</h3>
+            <div>
+                <button>Sign In</button>
+                <p>New to the System?<a href="#signup-form-container" id="open-signup-modal"> Join Now</a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- The sign-up form -->
+    <div id="signup-form-container" class="modal">
         <form action="/signup" method="post" class="signup-form">
             <h3>Please sign up</h3>
 
             <label for="name">Name</label>
-            <input type="text" placeholder="Full Name" id="name" name="name">
+            <input type="text" placeholder="Full Name" id="name" name="name" required>
 
             <label for="email">Email</label>
-            <input type="text" placeholder="Email" id="email" name="email">
+            <input type="text" placeholder="Email" id="email" name="email" required>
 
             <label for="password">Password</label>
-            <input type="password" placeholder="Password" id="password" name="password">
+            <input type="password" placeholder="Password" id="password" name="password" required>
 
             <button class="close" type="button"></button>
             <button class="signup-button">Sign Up</button>
         </form>
     </div>
-    <script>
-        // TO DO: Implement validation methods
 
-        const signupModal = document.getElementById("signup-modal");
-        const closeBtn = signupModal.querySelector(".close");
+    <script>
+        const signupFormContainer = document.getElementById("signup-form-container");
+        const closeBtn = signupFormContainer.querySelector(".close");
+        const signinFormContainer = document.getElementById("signin-form-container");
 
         // Function to open the sign-up modal
-        function openSignupModal() {
-            signupModal.style.display = "block";
+        function openSignupForm() {
+            signupFormContainer.style.display = "block";
+            signinFormContainer.style.display = "none";
         }
 
         // Function to close the sign-up modal
-        function closeSignupModal() {
-            signupModal.style.display = "none";
+        function closeSignupForm() {
+            signupFormContainer.style.display = "none";
+            signinFormContainer.style.display = "block";
         }
 
-        document.getElementById("open-signup-modal").addEventListener("click", openSignupModal);
-        closeBtn.addEventListener("click", closeSignupModal);
+        document.getElementById("open-signup-modal").addEventListener("click", openSignupForm);
+        closeBtn.addEventListener("click", closeSignupForm);
     </script>
 </body>
 </html>
