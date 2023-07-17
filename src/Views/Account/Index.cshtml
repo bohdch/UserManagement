@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using UserManagement.Data
+@inject UserManagementDbContext dbContext
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,20 +19,20 @@
         <form action="/signin" method="post" class="signin-form">
             <h3>Please sign in</h3>
 
-            @if (!ViewData.ModelState.IsValid)
+            @if (!ViewData.ModelState.IsValid && ViewData["FormType"] == "sign-in")
             {
-            <div class="error-message">
-                <ul>
-                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                            {
-                    <li>@error.ErrorMessage</li>
-                            }
-                </ul>
-            </div>
+                <div class="error-message">
+                    <ul>
+                        @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
             }
 
             <label for="email">Email</label>
-            <input type="text" placeholder="Email" id="email" name="email" required>
+            <input type="email" placeholder="Email" id="email" name="email" required>
 
             <label for="password">Password</label>
             <input type="password" placeholder="Password" id="password" name="password" required>
@@ -39,21 +42,33 @@
 
             <div>
                 <button>Sign In</button>
-                <p>New to the System?<a href="#signup-form-container" id="open-signup-modal"> Join Now</a></p>
+                <p>New to the System?<a href="#signup-form-container" id="open-signup-form"> Join Now</a></p>
             </div>
         </form>
     </div>
 
+
     <!-- The sign-up form -->
-    <div id="signup-form-container" class="modal">
-        <form action="/signup" method="post" class="signup-form">
+    <div id="signup-form-container" class="signup-form-container">
+        <form action="/signup" method="post" class="signup-form" id="signup-form" onsubmit="validateForm(event)">
             <h3>Please sign up</h3>
+            @if (!ViewData.ModelState.IsValid && ViewData["FormType"] == "sign-up")
+            {
+                <div class="error-message">
+                    <ul>
+                        @foreach (var error in ViewData.ModelState[""].Errors)
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
 
             <label for="name">Name</label>
             <input type="text" placeholder="Full Name" id="name" name="name" required>
 
             <label for="email">Email</label>
-            <input type="text" placeholder="Email" id="email" name="email" required>
+            <input type="email" placeholder="Email" id="email" name="email" required>
 
             <label for="password">Password</label>
             <input type="password" placeholder="Password" id="password" name="password" required>
@@ -63,25 +78,57 @@
         </form>
     </div>
 
+
     <script>
         const signupFormContainer = document.getElementById("signup-form-container");
         const closeBtn = signupFormContainer.querySelector(".close");
         const signinFormContainer = document.getElementById("signin-form-container");
 
         // Function to open the sign-up form
-        function openSignupForm() {
+        function openSignUpForm() {
             signupFormContainer.style.display = "block";
             signinFormContainer.style.display = "none";
         }
 
         // Function to close the sign-up form
-        function closeSignupForm() {
+        function closeSignUpForm() {
             signupFormContainer.style.display = "none";
             signinFormContainer.style.display = "block";
         }
 
-        document.getElementById("open-signup-modal").addEventListener("click", openSignupForm);
-        closeBtn.addEventListener("click", closeSignupForm);
+        function validateForm(event) {
+            var name = document.getElementById("signup-form").elements["name"].value;
+            var email = document.getElementById("signup-form").elements["email"].value;
+            var password = document.getElementById("signup-form").elements["password"].value;
+
+            // name validation
+            var regexName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+            if (!regexName.test(name)) {
+                alert("Please enter your full name as 'First Name Last Name'");
+                event.preventDefault();
+                return false;
+            }
+
+            // password validation
+            var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+            if (!regex.test(password)) {
+                alert("Invalid password. Please use at least 6 characters, including a letter and a digit");
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
+        }
+
+        document.getElementById("open-signup-form").addEventListener("click", openSignUpForm);
+        closeBtn.addEventListener("click", closeSignUpForm);
+
+
+        // Check if the OpenSignupForm flag is set, if so - open the signup form
+        @if ((bool)(ViewData["OpenSignupForm"] ?? false))
+        {
+            @:openSignUpForm();
+        }
     </script>
 </body>
 </html>

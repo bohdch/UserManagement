@@ -46,6 +46,7 @@ namespace UserManagement.Controllers
             catch (InvalidOperationException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
+                ViewData["FormType"] = "sign-in";
                 return View("Index");
             }
         }
@@ -53,6 +54,26 @@ namespace UserManagement.Controllers
         [HttpPost("/signup")]
         public async Task<IActionResult> SignUp(string name, string email, string password)
         {
+            // Check if the email is already taken
+            if (_dbContext.Users.Any(u => u.Email == email))
+            {
+                ModelState.AddModelError("", "Email already exists. Please choose a different email");
+                ViewData["FormType"] = "sign-up";
+                ViewData["OpenSignupForm"] = true; // Open the signup form
+
+                return View("Index");
+            }
+
+            // Check if the password is already taken
+            if (_dbContext.Users.Any(u => u.Password == password))
+            {
+                ModelState.AddModelError("", "Password is already taken. Please choose a different password");
+                ViewData["FormType"] = "sign-up";
+                ViewData["OpenSignupForm"] = true; // Open the signup form
+
+                return View("Index");
+            }
+
             var newUser = new User
             {
                 Name = name,

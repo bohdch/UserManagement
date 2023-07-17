@@ -151,7 +151,7 @@ p {
     margin: 0;
 }
 
-.modal {
+.signup-form-container {
     display: none;
     position: fixed;
     left: 0;
