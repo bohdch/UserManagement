@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.side-menu {
+    position: fixed;
+    height: 100%;
+    width: 240px;
+    background: black;
+    transition: all 0.5s ease;
+}
+
+.side-menu .menu-logo {
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.side-menu .menu-logo .logo-name {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 500;
+    margin: auto;
+}
+
+.side-menu .menu-links {
+    margin-top: 10px;
+}
+
+.side-menu .menu-links li {
+    position: relative;
+    list-style: none;
+    height: 50px;
+}
+
+.side-menu .menu-links li a {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+}
+
+.side-menu .menu-links li:hover a i {
+    color: black;
+}
+
+.side-menu .menu-links li a:hover {
+    background: #eeeeee;
+    color: black;
+}
+
+.side-menu .menu-links li i {
+    min-width: 60px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+}
+
+.side-menu .menu-links li a {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.side-menu .menu-links .logout {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.main-section {
+    position: relative;
+    background: #f5f5f5;
+    min-height: 100vh;
+    width: calc(100% - 240px);
+    left: 240px;
+    transition: all 0.5s ease;
+}
+
+.main-section nav {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: calc(100% - 240px);
+    left: 240px;
+    z-index: 100;
+    padding: 0 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.main-section nav .menu-button {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.main-section nav img {
+    height: 40px;
+    width: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.main-section nav .user_name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    margin: 0 10px;
+    white-space: nowrap;
+}
+
+.main-section .content {
+    position: relative;
+    padding-top: 104px;
+}
