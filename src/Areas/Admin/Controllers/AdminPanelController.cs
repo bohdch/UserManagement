@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace UserManagement.Controllers
+namespace BookVerse.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "AdminAccount")]

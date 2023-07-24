@@ -1,22 +1,22 @@
-﻿@using UserManagement.Models
+@using BookVerse.Models
 
-@model User
+@*@model User*@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Home</title>
-    <link rel="stylesheet" href="css/user-css/Home.css">
+    <link rel="stylesheet" href="css/user-css/Library.css">
 </head>
 <body>
     <nav>
         <div class="menu">
             <div class="logo">
-                <a href="#">Welcome @Model.Name!</a>
+                <a href="#">BookVerse</a>
             </div>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="#">Library</a></li>
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Feedback</a></li>
                 <li><a href="#">Notification</a></li>
@@ -24,6 +24,9 @@
             </ul>
         </div>
     </nav>
+    <section>
+        @RenderBody();
+    </section>
 </body>
 </html>
 

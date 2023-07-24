@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using UserManagement.Services.Interfaces;
-using UserManagement.Services.Interfaces;
-using UserManagement.Models;
+using BookVerse.Services.Interfaces;
+using BookVerse.Services.Interfaces;
+using BookVerse.Models;
 
-namespace UserManagement.Controllers.Api
+namespace BookVerse.Controllers.Api
 {
     [Route("/api/users")]
     [ApiController]

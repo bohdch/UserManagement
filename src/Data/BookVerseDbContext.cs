@@ -1,16 +1,16 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using UserManagement.Models;
+using BookVerse.Models;
 
-namespace UserManagement.Data
+namespace BookVerse.Data
 {
-    public class UserManagementDbContext : DbContext
+    public class BookVerseDbContext : DbContext
     {
         // Tables
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Admin> Admin { get; set; } = null!;
 
-        public UserManagementDbContext(DbContextOptions<UserManagementDbContext> options)
+        public BookVerseDbContext(DbContextOptions<BookVerseDbContext> options)
                 : base(options)
         {
             Database.EnsureCreated();

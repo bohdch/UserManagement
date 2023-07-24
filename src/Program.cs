@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using UserManagement.Services;
-using UserManagement.Services.Interfaces;
-using UserManagement.Models;
-using UserManagement.Data;
-using UserManagement.Controllers.Api;
+using BookVerse.Services;
+using BookVerse.Services.Interfaces;
+using BookVerse.Models;
+using BookVerse.Data;
+using BookVerse.Controllers.Api;
 
 public class Program
 {
@@ -25,7 +25,7 @@ public class Program
 
     private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<UserManagementDbContext>(options =>
+        services.AddDbContext<BookVerseDbContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });

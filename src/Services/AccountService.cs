@@ -7,18 +7,18 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using UserManagement.Data;
-using UserManagement.Models;
-using UserManagement.Services.Interfaces;
+using BookVerse.Data;
+using BookVerse.Models;
+using BookVerse.Services.Interfaces;
 
-namespace UserManagement.Services
+namespace BookVerse.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly UserManagementDbContext _dbContext;
+        private readonly BookVerseDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(UserManagementDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+        public AccountService(BookVerseDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
             _httpContextAccessor = httpContextAccessor;
@@ -42,7 +42,7 @@ namespace UserManagement.Services
 
             await _httpContextAccessor.HttpContext.SignInAsync("UserAccount", new ClaimsPrincipal(claimsIdentity));
 
-            return new RedirectToActionResult("Home", "Panel", null);
+            return new RedirectToActionResult("Library", "Panel", null);
         }
     }
 }

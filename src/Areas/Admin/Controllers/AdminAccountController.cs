@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using UserManagement.Models;
+using BookVerse.Models;
 
-namespace UserManagement.Controllers
+namespace BookVerse.Controllers
 {
     [Area("Admin")]
     public class AdminAccountController : Controller

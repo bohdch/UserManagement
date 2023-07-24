@@ -2,26 +2,26 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Text;
 using System.Text.Json;
-using UserManagement.Models;
-using UserManagement.Data;
+using BookVerse.Models;
+using BookVerse.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
-using UserManagement.Services.Interfaces;
-using UserManagement.Controllers.Api;
+using BookVerse.Services.Interfaces;
+using BookVerse.Controllers.Api;
 
-namespace UserManagement.Controllers
+namespace BookVerse.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManagementDbContext _dbContext;
+        private readonly BookVerseDbContext _dbContext;
         private readonly IAccountService _accountService;
         private readonly IUserApiController _userApiController;
 
-        public AccountController(UserManagementDbContext dbContext, IAccountService userAuthService, IUserApiController userApiController)
+        public AccountController(BookVerseDbContext dbContext, IAccountService userAuthService, IUserApiController userApiController)
         {
             _dbContext = dbContext;
             _accountService = userAuthService;

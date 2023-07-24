@@ -1,7 +1,7 @@
-﻿using UserManagement.Models;
+﻿using BookVerse.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace UserManagement.Services.Interfaces 
+namespace BookVerse.Services.Interfaces 
 {
     public interface IUserManagerService
     {

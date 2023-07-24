@@ -1,7 +1,7 @@
-﻿using UserManagement.Models;
+﻿using BookVerse.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace UserManagement.Controllers.Api
+namespace BookVerse.Controllers.Api
 {
     public interface IUserApiController
     {

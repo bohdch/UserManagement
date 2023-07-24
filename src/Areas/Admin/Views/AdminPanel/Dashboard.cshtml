@@ -1,8 +1,8 @@
-@using UserManagement.Data
-@using UserManagement.Models
+@using BookVerse.Data
+@using BookVerse.Models
 @using System.Linq;
 
-@inject UserManagementDbContext dbContext
+@inject BookVerseDbContext dbContext
 
 @{
     Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -33,20 +33,20 @@
                 <div class="indicator">
                     @if (usersCreatedYesterdayCount < userCreatedTodayCount)
                     {
-                        <i class='bx bx-up-arrow-alt arrow'></i>
-                        <span class="text">More registrations today</span>
+                    <i class='bx bx-up-arrow-alt arrow'></i>
+                    <span class="text">More registrations today</span>
                     }
 
                     else if (usersCreatedYesterdayCount > userCreatedTodayCount)
                     {
-                        <i class='bx bx-down-arrow-alt down'></i>
-                        <span class="text">More registrations yesterday</span>
+                    <i class='bx bx-down-arrow-alt down'></i>
+                    <span class="text">More registrations yesterday</span>
                     }
 
                     else
                     {
-                        <i class='bx bxs-minus-circle arrow'></i>
-                        <span class="text">Same number of registrations</span>
+                    <i class='bx bxs-minus-circle arrow'></i>
+                    <span class="text">Same number of registrations</span>
                     }
                 </div>
             </div>

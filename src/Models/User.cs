@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace UserManagement.Models
+namespace BookVerse.Models
 {
     public class User
     {

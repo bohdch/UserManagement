@@ -4,18 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using UserManagement.Data;
-using UserManagement.Models;
-using UserManagement.Services.Interfaces;
-using UserManagement.Controllers;
+using BookVerse.Data;
+using BookVerse.Models;
+using BookVerse.Services.Interfaces;
+using BookVerse.Controllers;
 
-namespace UserManagement.Services
+namespace BookVerse.Services
 {
     public class UserManagerService : IUserManagerService
     {
-        private readonly UserManagementDbContext _dbContext;
+        private readonly BookVerseDbContext _dbContext;
 
-        public UserManagerService(UserManagementDbContext dbContext)
+        public UserManagerService(BookVerseDbContext dbContext)
         {
             _dbContext = dbContext;
         }
