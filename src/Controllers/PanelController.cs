@@ -16,13 +16,11 @@ namespace BookVerse.Controllers
         [Route("{controller}/{action=Library}")]
         public IActionResult Library()
         {
-            /*            string userName = HttpContext.User.Identity.Name;
-                        string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userName = HttpContext.User.Identity.Name;
+            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                        var model = new User { Name = userName, Id = userId};
-                        return View(model);*/
-
-            return View();
+            var model = new User { Name = userName, Id = userId };
+            return View(model);
         }
 
         public async Task<IActionResult> Logout()

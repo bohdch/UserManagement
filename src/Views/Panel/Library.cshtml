@@ -1,5 +1,72 @@
-﻿@{
+﻿@using BookVerse.Models;
+@model User;
+
+@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-@*Implement html for library page*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <link rel="stylesheet" href="/css/user-css/Library.css">
+</head>
+<body>
+    <div class="header">
+        <div class="search_box">
+            <input type="text" placeholder="Search..">
+            <i class='bx bx-search-alt-2'></i>
+        </div>
+
+        <div class="header-icons">
+            <div class="account">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="">
+                <h4>@Model.Name!</h4>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Popular</a></li>
+                <li><a href="#">Classic</a></li>
+                <li><a href="#">Romance</a></li>
+                <li><a href="#">Horrors</a></li>
+            </ul>
+        </nav>
+    </div>
+    <section>
+        <div class="content-container">
+            <ul class="book-set">
+                <li class="book-heading">Popular</li>
+
+                <li class="book">
+                    <a href="https://en.wikipedia.org/wiki/The_Godfather_(novel)">
+                        <img src="https://images.booksense.com/images/369/167/9798632167369.jpg" alt="Book 1 Image">
+                    </a>
+                    <h3>Godfather</h3>
+                    <p>Mario Puzo</p>
+                </li>
+
+                <li class="book">Book 2</li>
+            </ul>
+            <ul class="book-set">
+                <li class="book-heading">Classic</li>
+                <li class="book">Book 1</li>
+                <li class="book">Book 2</li>
+            </ul>
+            <ul class="book-set">
+                <li class="book-heading">Romance</li>
+                <li class="book">Book 1</li>
+                <li class="book">Book 2</li>
+            </ul>
+            <ul class="book-set">
+                <li class="book-heading">Horrors</li>
+                <li class="book">Book 1</li>
+                <li class="book">Book 2</li>
+            </ul>
+        </div>
+    </section>
+</body>
+</html>
