@@ -22,7 +22,7 @@
         <div class="header-icons">
             <div class="account">
                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="">
-                <h4>@Model.Name!</h4>
+                <h4>@Model.Name</h4>
             </div>
         </div>
     </div>
@@ -39,20 +39,12 @@
     <section>
         <div class="content-container">
             <ul class="book-set">
-                <li class="book-heading">Popular</li>
-
-                <li class="book">
-                    <a href="https://en.wikipedia.org/wiki/The_Godfather_(novel)">
-                        <img src="https://images.booksense.com/images/369/167/9798632167369.jpg" alt="Book 1 Image">
-                    </a>
-                    <h3>Godfather</h3>
-                    <p>Mario Puzo</p>
-                </li>
-
-                <li class="book">Book 2</li>
+                <li class="book-heading" data-category="Popular">Popular</li>
             </ul>
+            <button id="nextButton" data-page="1">Next</button>
+
             <ul class="book-set">
-                <li class="book-heading">Classic</li>
+                <li class="book-heading" data-category="Classic">Classic</li>
                 <li class="book">Book 1</li>
                 <li class="book">Book 2</li>
             </ul>
@@ -68,5 +60,6 @@
             </ul>
         </div>
     </section>
+    <script src="~/js/user-panel/Library.js"></script>
 </body>
 </html>

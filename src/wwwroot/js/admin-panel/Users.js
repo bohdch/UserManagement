@@ -1,6 +1,6 @@
 async function getUsers() { 
     try {
-         // Fetch data from the "/users" endpoint using GET method
+         // Fetch data from the "/api/users" endpoint using GET method
         const response = await fetch("/api/users", {
             method: "GET",
             headers: {"Accept" : "application/json"}
@@ -42,7 +42,7 @@ async function getUsers() {
 }
 async function deleteUser(id){ 
     try {
-        // Fetch data from the "/users/{id}" endpoint using DELETE method
+        // Fetch data from the "/api/users/{id}" endpoint using DELETE method
         const response = await fetch(`/api/users/${id}`, {
             method: "DELETE",
             headers: {"Accept" : "application/json"}

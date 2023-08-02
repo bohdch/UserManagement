@@ -98,7 +98,7 @@ section {
 .content-container {
     display: inline;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 20px;
+    grid-gap: 30px;
 }
 
 .book-set {
@@ -113,5 +113,13 @@ section {
 .book {
     display: inline-block;
     padding: 10px 0;
+    max-width: 200px; /* Limit the book width to fit 6 books in a row */
+    margin-right: 60px; /* Add margin to create space between the books */
 }
 
+.book > h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
