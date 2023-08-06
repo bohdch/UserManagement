@@ -33,6 +33,8 @@ public class Program
         services.AddTransient<IUserManagerService, UserManagerService>();
         services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<IUserApiController, UserApiController>();
+        services.AddTransient<IBookService, BookService>();
+
 
         services.AddControllersWithViews();
         services.AddHttpContextAccessor();
