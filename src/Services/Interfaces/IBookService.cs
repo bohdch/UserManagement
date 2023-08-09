@@ -8,6 +8,9 @@ namespace BookVerse.Services.Interfaces
     public interface IBookService
     {
         Task<IEnumerable<Book>> GetPopularBooks(int offset, int limit);
-        Task AddPopularBooks(List<Book> books);
+        Task<IEnumerable<Book>> GetBooksByCategory(int offset, int limit, string category);
+        Task AddBooks(List<Book> books);
+        Task AddRequestedPage(string category, int page);
+        Task<bool> IsPageRequested(string category, int page);
     }
 }

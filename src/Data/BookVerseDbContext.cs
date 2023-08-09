@@ -9,6 +9,7 @@ namespace BookVerse.Data
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Book> Books { get; set; } = null!;
         public DbSet<Author> Authors { get; set; } = null!;
+        public DbSet<RequestedPage> RequestedPages { get; set; } = null!;
 
         public BookVerseDbContext(DbContextOptions<BookVerseDbContext> options)
             : base(options)
@@ -25,6 +26,12 @@ namespace BookVerse.Data
                     v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
 
             modelBuilder.Entity<Book>()
+                .Property(e => e.Bookshelves)
+                .HasConversion(
+                    v => string.Join(',', v),
+                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+            modelBuilder.Entity<Book>()
                .Property(e => e.Languages)
                .HasConversion(
                    v => string.Join(',', v),
@@ -34,7 +41,7 @@ namespace BookVerse.Data
                 .Property(e => e.Formats) 
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v), 
-                    v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v)); 
+                    v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
         }
     }
 }
