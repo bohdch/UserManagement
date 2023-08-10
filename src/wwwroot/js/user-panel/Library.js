@@ -1,160 +1,111 @@
-// Constant
-const CALLS_PER_LOAD = 3;
+const CALLS_PER_LOAD = 2;
 
-// Represents the current pages for API calls
-let currentPageForAPI = {
+const currentPageForAPI = {
     Popular: 1,
-    Classic: 1
+    Classic: 1,
+    Fantasy: 1,
+    Romance: 1,
+    Mystery: 1
 };
 
-// Represents the pages requested from the database
-let requestedPageFromDB = {
+const requestedPageFromDB = {
     Popular: 1,
-    Classic: 1
+    Classic: 1,
+    Fantasy: 1,
+    Romance: 1,
+    Mystery: 1
 };
 
-let loadNextBooksCounter = {
+const loadNextBooksCounter = {
     Popular: 0,
-    Classic: 0
+    Classic: 0,
+    Fantasy: 0,
+    Romance: 0,
+    Mystery: 0
 };
 
+async function fetchDataFromAPI(apiUrl) {
+    const response = await fetch(apiUrl);
 
-// Check if a page has been requested before
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+}
+
 async function isPageRequested(category, page) {
-    const response = await fetch(`/api/books/${category}/${page}/requested`, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-    });
-
-    if (response.ok) {
-        const result = await response.json();
-        return result.requested;
-    } else {
-        console.error("Failed to check if page is requested");
+    try {
+        const response = await fetchDataFromAPI(`/api/books/${category}/${page}/requested`);
+        return response.requested;
+    } catch (error) {
+        console.error("Failed to check if page is requested", error);
         return false;
     }
 }
 
-// Fetch books for a specific category from API
 async function fetchBooksFromAPI(category, page) {
     const pagesAvailable = await isPageRequested(category, page);
     if (pagesAvailable) {
         return null;
     }
 
-    let apiUrl;
-    if (category === 'Popular') {
-        apiUrl = `https://gutendex.com/books/?sort=popular&page=${page}`;
-    } else {
-        apiUrl = `https://gutendex.com/books/?topic=${category}&page=${page}`;
-    }
+    const apiUrl = category === 'Popular'
+        ? `https://gutendex.com/books/?sort=popular&page=${page}`
+        : `https://gutendex.com/books/?topic=${category}&page=${page}`;
 
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data.results;
+    return fetchDataFromAPI(apiUrl).then(data => data.results);
 }
 
-// Save books data to the database
+async function fetchAndSaveBooksFromAPI(category, page) {
+    const books = await fetchBooksFromAPI(category, page);
+    if (books !== null) {
+        await saveBooksToDatabase(books, category);
+    }
+}
+
 async function saveBooksToDatabase(books, category) {
-    const response = await fetch('/api/books/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(books)
-    });
-
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    if (category == "Popular" && (loadNextBooksCounter.Popular % CALLS_PER_LOAD != 0)) {
-        await FetchPopularBooksFromDB();
-    }
-
-    if (category == "Classic" && (loadNextBooksCounter.Classic % CALLS_PER_LOAD != 0)) {
-        await FetchBooksByCategoryFromDB('Classic');
-    }
-}
-
-// Load the next page of books
-async function loadNextPageOfBooks(category) {
-    if (category === "Popular") {
-        loadNextBooksCounter.Popular++;
-        requestedPageFromDB.Popular++;
-
-        await FetchPopularBooksFromDB();
-
-        if (loadNextBooksCounter.Popular % CALLS_PER_LOAD === 0) {
-            currentPageForAPI.Popular++;
-
-            const books = await fetchBooksFromAPI(category, currentPageForAPI.Popular);
-            await saveBooksToDatabase(books, category);
-        }
-    }
-
-    if (category === "Classic") {
-        loadNextBooksCounter.Classic++;
-        requestedPageFromDB.Classic++;
-
-        await FetchBooksByCategoryFromDB(category);
-
-        if (loadNextBooksCounter.Classic % CALLS_PER_LOAD === 0) {
-            currentPageForAPI.Classic++;
-
-            const books = await fetchBooksFromAPI(category, currentPageForAPI.Classic);
-            await saveBooksToDatabase(books, category);
-        }
-    }
-}
-
-// Fetch and display popular books
-async function FetchBooksByCategoryFromDB(category) {
-    const response = await fetch(`/api/books/${category}/${requestedPageFromDB.Classic}`, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-    });
-
-    if (response.ok) {
-        const books = await response.json();
-        const categoryBookSet = document.querySelector(`.book-heading[data-category="${category}"]`).parentElement;
-
-        books.forEach(bookData => {
-            const bookItem = createBookElement(bookData);
-            categoryBookSet.appendChild(bookItem);
+    try {
+        const response = await fetch('/api/books/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(books)
         });
 
-    } else {
-        console.error("Failed to fetch data from the API");
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const counter = loadNextBooksCounter[category];
+        if ((counter % CALLS_PER_LOAD !== 0) && (requestedPageFromDB[category] % CALLS_PER_LOAD !== 0)) {
+            await fetchAndDisplayBooksFromDB(category);
+        }
+    } catch (error) {
+        console.error("Failed to save books to the database", error);
     }
 }
 
-async function FetchPopularBooksFromDB() {
-    const category = "Popular";
-
-    const response = await fetch(`/api/books/popular/${requestedPageFromDB.Popular}`, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-    });
-
-    if (response.ok) {
-        const books = await response.json();
-        const categoryBookSet = document.querySelector(`.book-heading[data-category="${category}"]`).parentElement;
-
-        books.forEach(bookData => {
-            const bookItem = createBookElement(bookData);
-            categoryBookSet.appendChild(bookItem);
+async function fetchAndDisplayBooksFromDB(category) {
+    try {
+        const response = await fetch(`/api/books/${category}/${requestedPageFromDB[category]}`, {
+            method: "GET",
+            headers: { "Accept": "application/json" }
         });
 
-    } else {
-        console.error("Failed to fetch data from the API");
+        if (response.ok) {
+            const books = await response.json();
+            const categoryBookSet = document.querySelector(`.book-heading[data-category="${category}"]`).parentElement;
+            books.forEach(bookData => categoryBookSet.appendChild(createBookElement(bookData)));
+        } else {
+            console.error("Failed to fetch data from the API");
+        }
+    } catch (error) {
+        console.error("Failed to fetch and display books from the database", error);
     }
 }
 
-// Create a book element
 function createBookElement(bookData) {
     const bookItem = document.createElement('li');
     bookItem.className = 'book';
@@ -175,37 +126,32 @@ function createBookElement(bookData) {
     return bookItem;
 }
 
-// Event listeners for the "Load Next" buttons
+async function loadNextPageOfBooks(category) {
+    loadNextBooksCounter[category]++;
+    requestedPageFromDB[category]++;
+
+    await fetchAndDisplayBooksFromDB(category);
+
+    if (loadNextBooksCounter[category] % CALLS_PER_LOAD === 0) {
+        currentPageForAPI[category]++;
+
+        await fetchAndSaveBooksFromAPI(category, currentPageForAPI[category]);
+    }
+}
+
+async function loadInitialBooks() {
+    const categories = ['Popular', 'Classic', 'Fantasy', 'Romance', 'Mystery'];
+
+    for (const category of categories) {
+        await fetchAndSaveBooksFromAPI(category, currentPageForAPI[category]);
+        await fetchAndDisplayBooksFromDB(category);
+    }
+}
+
 document.getElementById('nextPopularButton').addEventListener('click', () => loadNextPageOfBooks('Popular'));
 document.getElementById('nextClassicsButton').addEventListener('click', () => loadNextPageOfBooks('Classic'));
+document.getElementById('nextFantasyButton').addEventListener('click', () => loadNextPageOfBooks('Fantasy'));
+document.getElementById('nextRomanceButton').addEventListener('click', () => loadNextPageOfBooks('Romance'));
+document.getElementById('nextMysteryButton').addEventListener('click', () => loadNextPageOfBooks('Mystery'));
 
-
-// Load and display popular books
-async function loadPopularBooks() {
-    const books = await fetchBooksFromAPI('Popular', currentPageForAPI.Popular);
-
-    if (books !== null) {
-        await saveBooksToDatabase(books, 'Popular');
-    }
-}
-
-// Load and display classic books
-async function loadClassicBooks() {
-    const books = await fetchBooksFromAPI('Classic', currentPageForAPI.Classic);
-
-    if (books !== null) {
-        await saveBooksToDatabase(books, 'Classic');
-    }
-}
-
-// Load initial set of books for both categories
-async function loadInitialBooks() {
-    await loadPopularBooks();
-    await FetchPopularBooksFromDB();
-
-    await loadClassicBooks();
-    await FetchBooksByCategoryFromDB('Classic');
-}
-
-// Initial loading and display books
 loadInitialBooks();
