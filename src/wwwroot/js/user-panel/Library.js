@@ -110,18 +110,20 @@ function createBookElement(bookData) {
     const bookItem = document.createElement('li');
     bookItem.className = 'book';
 
-    const bookLink = document.createElement('a');
-    bookLink.href = bookData.formats['text/html'];
-
     const bookImage = document.createElement('img');
     bookImage.src = bookData.formats['image/jpeg'];
-    bookImage.alt = bookData.title;
-    bookLink.appendChild(bookImage);
-    bookItem.appendChild(bookLink);
+    bookImage.alt = 'Audio Book';
 
     const bookTitle = document.createElement('h3');
     bookTitle.textContent = bookData.title;
-    bookItem.appendChild(bookTitle);
+
+    const bookAuthor = document.createElement('p');
+    const authors = bookData.authors && bookData.authors.length > 0 ? bookData.authors.reduce((acc, author) => acc + ', ' + author.name, '').slice(2) : 'Undefined';
+    bookAuthor.textContent = authors;
+
+    bookItem.append(bookImage, bookTitle, bookAuthor);
+
+    bookItem.addEventListener('click', () => redirectToBookDetails(bookData, authors));
 
     return bookItem;
 }

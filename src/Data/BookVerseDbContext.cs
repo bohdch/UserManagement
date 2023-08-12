@@ -19,6 +19,14 @@ namespace BookVerse.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Nonclustered indexes
+            modelBuilder.Entity<Book>()
+                .HasIndex(book => book.DownloadCount);
+
+            modelBuilder.Entity<Book>()
+                .HasIndex(book => book.Bookshelves);
+
+
             modelBuilder.Entity<Book>()
                 .Property(e => e.Subjects)
                 .HasConversion(

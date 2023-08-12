@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BookVerse.Services.Interfaces;
 using BookVerse.Models;
+using BookVerse.Models.ViewModels;
 using BookVerse.Data;
 
 namespace BookVerse.Services
@@ -16,27 +17,45 @@ namespace BookVerse.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Book>> GetPopularBooks(int offset, int limit)
+        public async Task<IEnumerable<BookViewModel>> GetPopularBooks(int offset, int limit)
         {
-            List<Book> books = await _dbContext.Books
+            var popularBooks = await _dbContext.Books
+                .AsNoTracking()
                 .OrderByDescending(book => book.DownloadCount)
                 .Skip(offset)
                 .Take(limit)
-                .ToListAsync();
+                .Select(book => new BookViewModel
+                {
+                    Title = book.Title,
+                    Authors = book.Authors,
+                    Formats = book.Formats,
+                })
+                .ToListAsync()
+                .ConfigureAwait(false);
 
-            return books;
+            return popularBooks;
         }
 
-        public async Task<IEnumerable<Book>> GetBooksByCategory(int offset, int limit, string category)
+        public async Task<IEnumerable<BookViewModel>> GetBooksByCategory(int offset, int limit, string category)
         {
-            List<Book> booksByCategory = await _dbContext.Books
-                   .OrderByDescending(book => book.DownloadCount)
-                   .Where(book =>
-                       ((string)(object)book.Bookshelves).Contains(category) ||
-                       ((string)(object)book.Subjects).Contains(category))
-                   .Skip(offset)
-                   .Take(limit)
-                   .ToListAsync();
+            var query = _dbContext.Books
+                .AsNoTracking()
+                .OrderByDescending(book => book.DownloadCount)
+                .Where(book =>
+                    ((string)(object)book.Bookshelves).Contains(category) ||
+                    ((string)(object)book.Subjects).Contains(category));
+
+            var booksByCategory = await query
+                .Skip(offset)
+                .Take(limit)
+                .Select(book => new BookViewModel
+                {
+                    Title = book.Title,
+                    Authors = book.Authors,
+                    Formats = book.Formats,
+                })
+                .ToListAsync()
+                .ConfigureAwait(false);
 
             return booksByCategory;
         }
