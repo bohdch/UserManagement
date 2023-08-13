@@ -12,6 +12,8 @@ public class Book
 
     public List<Author> Authors { get; set; }
 
+    public string Description { get; set; } = String.Empty;
+
     public string[] Subjects { get; set; }
 
     public string[] Bookshelves { get; set; }

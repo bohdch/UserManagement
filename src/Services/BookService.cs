@@ -26,6 +26,7 @@ namespace BookVerse.Services
                 .Take(limit)
                 .Select(book => new BookViewModel
                 {
+                    Id = book.Id,
                     Title = book.Title,
                     Authors = book.Authors,
                     Formats = book.Formats,
@@ -50,6 +51,7 @@ namespace BookVerse.Services
                 .Take(limit)
                 .Select(book => new BookViewModel
                 {
+                    Id = book.Id,
                     Title = book.Title,
                     Authors = book.Authors,
                     Formats = book.Formats,
@@ -58,6 +60,24 @@ namespace BookVerse.Services
                 .ConfigureAwait(false);
 
             return booksByCategory;
+        }
+
+        public async Task<BookDetailsViewModel> GetBookDetails(int bookId)
+        {
+            Book book = await _dbContext.Books.FindAsync(bookId);
+
+            if (book == null)
+            {
+                return null; 
+            }
+
+            var bookDetails = new BookDetailsViewModel
+            {
+                Id = book.Id,
+                Description = book.Description
+            };
+
+            return bookDetails;
         }
 
         public async Task AddBooks(List<Book> books)
@@ -72,6 +92,14 @@ namespace BookVerse.Services
                 }
             }
 
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateBookDetails(BookDetailsViewModel book)
+        {
+            Book result = await _dbContext.Books.FindAsync(book.Id);
+
+            result.Description = book.Description;
             await _dbContext.SaveChangesAsync();
         }
 

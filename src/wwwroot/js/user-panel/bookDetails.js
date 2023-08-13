@@ -5,14 +5,48 @@ const bookImageElement = document.getElementById("book-image");
 const bookTitleElement = document.getElementById("book-title");
 const bookAuthorElement = document.getElementById("book-author");
 const bookDescriptionElement = document.getElementById("book-description");
+
 const bookLinkToContentElement = document.getElementById("book-content");
 
 let scrollPosition = 0;
 
+async function redirectToBookDetails(bookData, authors) {
+    const book = {
+        id: bookData.id,
+        image: bookData.formats['image/jpeg'],
+        title: bookData.title,
+        authors: authors,
+        description: "Loading description...",
+        linkToContent: bookData.formats['text/html']
+    };
+
+    scrollPosition = window.scrollY;
+    displayBookDetails(book);
+
+
+    const existingBook = await fetchExistingBookDetails(book.id);
+
+    if (!existingBook || !existingBook.description) {
+        const description = await fetchBookDescription(bookData.title, authors);
+        book.description = description;
+
+        const bookDetailsViewModel = {
+            Id: book.id,
+            Description: book.description
+        };
+
+        await updateBookDetailsInDatabase(bookDetailsViewModel);  
+    } else {
+        book.description = existingBook.description;
+    }
+
+    updateBookDetails(book);
+}
+
 async function fetchBookDescription(title, author) {
     const responsePromises = [
         fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}&maxResults=1&langRestrict=en&fields=items(volumeInfo(description))`),
-        fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}&maxResults=1&langRestrict=en&fields=items(volumeInfo(description))`)
+        fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${getSurname(author)}&maxResults=1&langRestrict=en&fields=items(volumeInfo(description))`)
     ];
 
     const [response, alternativeResponse] = await Promise.allSettled(responsePromises);
@@ -26,28 +60,44 @@ async function fetchBookDescription(title, author) {
     return description;
 }
 
-async function redirectToBookDetails(bookData, authors) {
-    const book = {
-        image: bookData.formats['image/jpeg'],
-        title: bookData.title,
-        authors: authors,
-        description: "Loading description...",
-        linkToContent: bookData.formats['text/html']
-    };
-
-    scrollPosition = window.scrollY;
-    displayBookDetails(book);
-
-    fetchBookDescription(bookData.title, authors)
-        .then(description => {
-            book.description = description;
-            updateBookDetails(book);
-        });
+async function fetchExistingBookDetails(bookId) {
+    try {
+        const response = await fetch(`/api/book-details/${bookId}`);
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error("Failed to fetch existing book details", error);
+        return null;
+    }
 }
 
-function updateBookDetails(book) {
+async function updateBookDetailsInDatabase(book) {
+    try {
+        const response = await fetch('/api/book-details/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(book)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.error("Failed to save books to the database", error);
+    }
+}
+
+async function updateBookDetails(book) {
     bookDescriptionElement.textContent = book.description;
-    bookLinkToContentElement.href = book.linkToContent;
+}
+
+function getSurname(name) {
+    return name.split(",")[0] || name.split(" ").pop();
 }
 
 function displayBookDetails(book) {
