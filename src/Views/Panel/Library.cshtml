@@ -10,7 +10,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Library</title>
-    <link rel="stylesheet" href="/css/user-css/library.css">
+    <link href="/css/user-css/library.css" rel="stylesheet" >
+    <link href="/css/user-css/book-details.css" rel="stylesheet" />
 </head>
 <body>
     <div id="content-container">
@@ -22,6 +23,7 @@
 
             <div class="header-icons">
                 <div class="account">
+                    @**@
                     <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="">
                     <h4>@Model.Name</h4>
                 </div>
@@ -69,21 +71,27 @@
     </div>
 
     @*Details about a specific book*@
-<div id="book-details" style="display: none;">
-    <img src="#" alt="image" id="book-image" />
-    <p>Title: <span id="book-title"></span></p>
-    <p>Author(s): <span id="book-author"></span></p>
-    <p>Subjects: <span id="book-subjects"></span></p>
-    <p>Bookshelves: <span id="book-bookshelves"></span></p>
-    <p>Language(s): <span id="book-languages"></span></p>
-    <p>Description: <span id="book-description"></span></p>
+    <div id="book-details" style="display: none;">
+        <div class="book-header">
+            <img src="#" alt="Book Cover" id="book-image" />
+            <div class="book-info">
+                <h1 id="book-title"></h1>
+                <p id="book-author"></p>
+                <p><strong>Subjects:</strong> <span id="book-subjects"></span></p>
+                <p><strong>Bookshelves:</strong> <span id="book-bookshelves"></span></p>
+                <p><strong>Language(s):</strong> <span id="book-languages"></span></p>
 
-    <button onclick="closeBookDetails()">Close</button>
-
-    <a href="#" id="book-content" target="_blank">
-        <input type="button" value="Read" />
-    </a>
-</div>
+                <a href="#" id="book-content" target="_blank">
+                    <input type="button" value="Read" />
+                </a>
+            </div>
+        </div>
+        <section>
+            <h3>Description:</h3>
+            <p id="book-description"></p>
+        </section>
+        <button class="close" type="button" onclick="closeBookDetails()"></button>
+    </div>
     <script src="~/js/user-panel/library.js"></script>
     <script src="~/js/user-panel/bookDetails.js"></script>
 </body>
