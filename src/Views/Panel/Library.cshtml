@@ -69,18 +69,21 @@
     </div>
 
     @*Details about a specific book*@
-    <div id="book-details" style="display: none;">
-        <img src="#" alt="image" id="book-image"/>
-        <p>Title: <span id="book-title"></span></p>
-        <p>Author(s): <span id="book-author"></span></p>
-        <p>Description: <span id="book-description"></span></p>
+<div id="book-details" style="display: none;">
+    <img src="#" alt="image" id="book-image" />
+    <p>Title: <span id="book-title"></span></p>
+    <p>Author(s): <span id="book-author"></span></p>
+    <p>Subjects: <span id="book-subjects"></span></p>
+    <p>Bookshelves: <span id="book-bookshelves"></span></p>
+    <p>Language(s): <span id="book-languages"></span></p>
+    <p>Description: <span id="book-description"></span></p>
 
-        <button onclick="closeBookDetails()">Close</button>
+    <button onclick="closeBookDetails()">Close</button>
 
-        <a href="#" id="book-content" target="_blank">
-            <input type="button" value="Read"/>
-        </a>
-    </div>
+    <a href="#" id="book-content" target="_blank">
+        <input type="button" value="Read" />
+    </a>
+</div>
     <script src="~/js/user-panel/library.js"></script>
     <script src="~/js/user-panel/bookDetails.js"></script>
 </body>

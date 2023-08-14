@@ -1,12 +1,15 @@
-const bookDetails = document.getElementById("book-details");
-const contentContainer = document.getElementById("content-container");
-
-const bookImageElement = document.getElementById("book-image");
-const bookTitleElement = document.getElementById("book-title");
-const bookAuthorElement = document.getElementById("book-author");
-const bookDescriptionElement = document.getElementById("book-description");
-
-const bookLinkToContentElement = document.getElementById("book-content");
+const elements = {
+    bookDetails: document.getElementById("book-details"),
+    contentContainer: document.getElementById("content-container"),
+    bookImage: document.getElementById("book-image"),
+    bookTitle: document.getElementById("book-title"),
+    bookAuthor: document.getElementById("book-author"),
+    bookSubjects: document.getElementById("book-subjects"),
+    bookBookshelves: document.getElementById("book-bookshelves"),
+    bookLanguages: document.getElementById("book-languages"),
+    bookDescription: document.getElementById("book-description"),
+    bookLinkToContent: document.getElementById("book-content"),
+};
 
 let scrollPosition = 0;
 
@@ -16,61 +19,77 @@ async function redirectToBookDetails(bookData, authors) {
         image: bookData.formats['image/jpeg'],
         title: bookData.title,
         authors: authors,
+        subjects: "Loading subjects...",
+        bookshelves: "Loading bookshelves...",
+        languages: "Loading languages...",
         description: "Loading description...",
-        linkToContent: bookData.formats['text/html']
+        linkToContent: bookData.formats['text/html'],
     };
 
     scrollPosition = window.scrollY;
     displayBookDetails(book);
 
-
     const existingBook = await fetchExistingBookDetails(book.id);
 
     if (!existingBook || !existingBook.description) {
         const description = await fetchBookDescription(bookData.title, authors);
-        book.description = description;
+
+        Object.assign(book, {
+            description,
+            subjects: existingBook.subjects,
+            bookshelves: existingBook.bookshelves,
+            languages: existingBook.languages,
+        });
 
         const bookDetailsViewModel = {
             Id: book.id,
-            Description: book.description
+            Description: description,
+            Subjects: existingBook.subjects,
+            Bookshelves: existingBook.bookshelves,
+            languages: existingBook.languages,
         };
 
-        await updateBookDetailsInDatabase(bookDetailsViewModel);  
+        await updateBookDetailsInDatabase(bookDetailsViewModel);
     } else {
-        book.description = existingBook.description;
+        Object.assign(book, {
+            description: existingBook.description,
+            subjects: existingBook.subjects,
+            bookshelves: existingBook.bookshelves,
+            languages: existingBook.languages,
+        });
     }
 
     updateBookDetails(book);
 }
 
 async function fetchBookDescription(title, author) {
-    const responsePromises = [
-        fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}&maxResults=1&langRestrict=en&fields=items(volumeInfo(description))`),
-        fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${getSurname(author)}&maxResults=1&langRestrict=en&fields=items(volumeInfo(description))`)
-    ];
+    const response = await fetchBookInfo(title, author);
+    const data = await response.json();
 
-    const [response, alternativeResponse] = await Promise.allSettled(responsePromises);
+    const description =
+        data?.items?.[0]?.volumeInfo?.description ||
+        (await fetchAlternativeBookDescription(title, getSurname(author)));
 
-    const [data, alternativeData] = await Promise.allSettled([response.value.json(), alternativeResponse.value.json()]);
+    return description || 'Not available';
+}
 
-    let description;
+async function fetchAlternativeBookDescription(title, author) {
+    const response = await fetchBookInfo(title, author);
+    const data = await response.json();
 
-    description = data.value?.items?.[0]?.volumeInfo?.description || alternativeData.value?.items?.[0]?.volumeInfo?.description || 'Description not available';
-
-    return description;
+    return data?.items?.[0]?.volumeInfo?.description || null;
 }
 
 async function fetchExistingBookDetails(bookId) {
     try {
         const response = await fetch(`/api/book-details/${bookId}`);
         if (response.ok) {
-            const data = await response.json();
-            return data;
+            return response.json();
         }
     } catch (error) {
         console.error("Failed to fetch existing book details", error);
-        return null;
     }
+    return null;
 }
 
 async function updateBookDetailsInDatabase(book) {
@@ -78,48 +97,58 @@ async function updateBookDetailsInDatabase(book) {
         const response = await fetch('/api/book-details/update', {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(book)
+            body: JSON.stringify(book),
         });
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
     } catch (error) {
-        console.error("Failed to save books to the database", error);
+        console.error("Failed to update book details in the database", error);
     }
 }
 
-async function updateBookDetails(book) {
-    bookDescriptionElement.textContent = book.description;
+function updateBookDetails(book) {
+    elements.bookDescription.textContent = book.description;
+    elements.bookSubjects.textContent = book.subjects;
+    elements.bookBookshelves.textContent = book.bookshelves.length === 0 ? "Not available" : book.bookshelves;
+    elements.bookLanguages.textContent = book.languages;
+}
+
+function displayBookDetails(book) {
+    const { image, title, authors, subjects, bookshelves, languages, description, linkToContent } = book;
+
+    elements.bookImage.src = image;
+    elements.bookImage.alt = "Book cover image";
+    elements.bookTitle.textContent = title;
+    elements.bookAuthor.textContent = authors;
+    elements.bookSubjects.textContent = subjects;
+    elements.bookBookshelves.textContent = bookshelves;
+    elements.bookLanguages.textContent = languages;
+    elements.bookDescription.textContent = description;
+    elements.bookLinkToContent.href = linkToContent;
+
+    openBookDetails();
+}
+
+async function fetchBookInfo(title, author) {
+    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}&maxResults=1&langRestrict=en&fields=items(volumeInfo(description))`);
+    return response;
 }
 
 function getSurname(name) {
     return name.split(",")[0] || name.split(" ").pop();
 }
 
-function displayBookDetails(book) {
-    bookImageElement.src = book.image;
-    bookImageElement.alt = "Book cover image";
-
-    bookTitleElement.textContent = book.title;
-    bookAuthorElement.textContent = book.authors;
-    bookDescriptionElement.textContent = book.description;
-    bookLinkToContentElement.href = book.linkToContent;
-
-    openBookDetails();
-}
-
 function openBookDetails() {
-    bookDetails.style.display = "block";
-    contentContainer.style.display = "none";
+    elements.bookDetails.style.display = "block";
+    elements.contentContainer.style.display = "none";
 }
 
 function closeBookDetails() {
-    bookDetails.style.display = "none";
-    contentContainer.style.display = "block";
-
+    elements.bookDetails.style.display = "none";
+    elements.contentContainer.style.display = "block";
     window.scroll(0, scrollPosition);
 }

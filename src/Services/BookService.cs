@@ -5,6 +5,7 @@ using BookVerse.Services.Interfaces;
 using BookVerse.Models;
 using BookVerse.Models.ViewModels;
 using BookVerse.Data;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BookVerse.Services
 {
@@ -74,7 +75,10 @@ namespace BookVerse.Services
             var bookDetails = new BookDetailsViewModel
             {
                 Id = book.Id,
-                Description = book.Description
+                Description = book.Description,
+                Subjects = book.Subjects,
+                Bookshelves = book.Bookshelves,
+                Languages = book.Languages,
             };
 
             return bookDetails;

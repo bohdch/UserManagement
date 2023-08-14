@@ -30,19 +30,19 @@ namespace BookVerse.Data
             modelBuilder.Entity<Book>()
                 .Property(e => e.Subjects)
                 .HasConversion(
-                    v => string.Join(',', v),
+                    v => string.Join(", ", v),
                     v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
 
             modelBuilder.Entity<Book>()
                 .Property(e => e.Bookshelves)
                 .HasConversion(
-                    v => string.Join(',', v),
+                    v => string.Join(", ", v),
                     v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
 
             modelBuilder.Entity<Book>()
                .Property(e => e.Languages)
                .HasConversion(
-                   v => string.Join(',', v),
+                   v => string.Join(", ", v),
                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
 
             modelBuilder.Entity<Book>()
