@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookVerse.Controllers.Api
 {
-    public interface IUserApiController
+    public interface IUserController
     {
         Task<IActionResult> GetAllUsers();
         Task<IActionResult> GetUser(string? id);

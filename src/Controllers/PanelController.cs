@@ -14,12 +14,9 @@ namespace BookVerse.Controllers
     public class PanelController : Controller
     {
         [Route("{controller}/{action=Library}")]
-        public IActionResult Library()
+        public async Task<IActionResult> Library()
         {
-            string userName = HttpContext.User.Identity.Name;
-            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var model = new User { Name = userName, Id = userId };
+            var model = await GetUserModelAsync();
             return View(model);
         }
 
@@ -27,6 +24,14 @@ namespace BookVerse.Controllers
         {
             await HttpContext.SignOutAsync("UserAccount");
             return RedirectToAction("Index", "Account");
+        }
+
+        private async Task<User> GetUserModelAsync()
+        {
+            string userName = HttpContext.User.Identity.Name;
+            string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return new User { Name = userName, Id = userId };
         }
     }
 }

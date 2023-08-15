@@ -30,10 +30,11 @@ public class Program
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
 
+        services.AddTransient<IUserController, UserController>();
         services.AddTransient<IUserManagerService, UserManagerService>();
         services.AddTransient<IAccountService, AccountService>();
-        services.AddTransient<IUserApiController, UserApiController>();
         services.AddTransient<IBookService, BookService>();
+        services.AddTransient<IPageTrackingService, PageTrackingService>();
 
 
         services.AddControllersWithViews();

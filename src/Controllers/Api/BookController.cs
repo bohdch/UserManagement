@@ -9,12 +9,12 @@ using BookVerse.Models.ViewModels;
 namespace BookVerse.Controllers.Api
 {
     [ApiController]
-    public class BookApiController : ControllerBase
+    public class BookController : ControllerBase
     {
         private readonly IBookService _bookService;
         const int itemsPerPage = 8;
 
-        public BookApiController(IBookService bookService)
+        public BookController(IBookService bookService)
         {
             _bookService = bookService;
         }
@@ -56,18 +56,6 @@ namespace BookVerse.Controllers.Api
         {
             await _bookService.UpdateBookDetails(book);
             return Ok();
-        }
-
-        [HttpGet("/api/books/{category}/{page}/requested")]
-        public async Task<IActionResult> CheckRequestedPage(string category, int page)
-        {
-            bool isRequested = await _bookService.IsPageRequested(category, page);
-
-            if(!isRequested)
-            {
-                await _bookService.AddRequestedPage(category, page);
-            }
-            return Ok(new { requested = isRequested });
         }
     }
 }

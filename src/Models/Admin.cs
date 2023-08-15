@@ -9,7 +9,6 @@ namespace BookVerse.Models
         public string Name { get; set; } = "admin";
 
         [Required]
-        [Key]
         public string Password { get; set; } = "admin";
     }
 }

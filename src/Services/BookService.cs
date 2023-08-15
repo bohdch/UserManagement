@@ -106,22 +106,5 @@ namespace BookVerse.Services
             result.Description = book.Description;
             await _dbContext.SaveChangesAsync();
         }
-
-        public async Task AddRequestedPage(string category, int page)
-        {
-            bool pageExists = await _dbContext.RequestedPages.AnyAsync(rp => rp.Category == category && rp.PageNumber == page);
-
-            if (!pageExists)
-            {
-                var requestedPage = new RequestedPage { Category = category, PageNumber = page };
-                _dbContext.RequestedPages.Add(requestedPage);
-                await _dbContext.SaveChangesAsync();
-            }
-        }
-
-        public async Task<bool> IsPageRequested(string category, int page)
-        {
-            return await _dbContext.RequestedPages.AnyAsync(rp => rp.Category == category && rp.PageNumber == page);
-        }
     }
 }

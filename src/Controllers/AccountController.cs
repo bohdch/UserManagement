@@ -19,9 +19,9 @@ namespace BookVerse.Controllers
     {
         private readonly BookVerseDbContext _dbContext;
         private readonly IAccountService _accountService;
-        private readonly IUserApiController _userApiController;
+        private readonly IUserController _userApiController;
 
-        public AccountController(BookVerseDbContext dbContext, IAccountService userAuthService, IUserApiController userApiController)
+        public AccountController(BookVerseDbContext dbContext, IAccountService userAuthService, IUserController userApiController)
         {
             _dbContext = dbContext;
             _accountService = userAuthService;

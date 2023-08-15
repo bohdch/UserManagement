@@ -17,9 +17,5 @@ namespace BookVerse.Services.Interfaces
         Task AddBooks(List<Book> books);
         
         Task UpdateBookDetails(BookDetailsViewModel book);
-        
-        Task AddRequestedPage(string category, int page);
-        
-        Task<bool> IsPageRequested(string category, int page);
     }
 }

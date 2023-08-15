@@ -9,11 +9,11 @@ namespace BookVerse.Controllers.Api
 {
     [Route("/api/users")]
     [ApiController]
-    public class UserApiController : ControllerBase, IUserApiController
+    public class UserController : ControllerBase, IUserController
     {
         private readonly IUserManagerService _userManagerService;
 
-        public UserApiController(IUserManagerService userManagerService)
+        public UserController(IUserManagerService userManagerService)
         {
             _userManagerService = userManagerService;
         }

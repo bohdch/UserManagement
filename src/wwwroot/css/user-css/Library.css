@@ -1,11 +1,9 @@
-/* Reset some default styles */
 body, h1, h2, h3, h4, h5, h6, p, ul, li {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-/* Global Styles */
 .header {
     display: flex;
     align-items: center;
@@ -19,48 +17,48 @@ body, h1, h2, h3, h4, h5, h6, p, ul, li {
     align-items: center;
 }
 
-    .search_box input {
-        padding: 12px;
-        width: 300px;
-        background: rgb(228, 228, 228);
-        border-radius: 5px;
-        border: none;
-    }
+.search_box input {
+    padding: 12px;
+    width: 300px;
+    background: rgb(228, 228, 228);
+    border-radius: 5px;
+    border: none;
+}
 
-    .search_box i {
-        padding: 13px;
-        cursor: pointer;
-        color: #fff;
-        background: #000;
-        border-radius: 5px;
-        font-size: 18px;
-    }
+.search_box i {
+    padding: 13px;
+    cursor: pointer;
+    color: #fff;
+    background: #000;
+    border-radius: 5px;
+    font-size: 18px;
+}
 
 .header-icons {
     display: flex;
     align-items: center;
 }
 
-    .header-icons .account {
-        width: 180px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+.header-icons .account {
+    width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .header-icons .account img {
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            border-radius: 50%;
-        }
+.header-icons .account img {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    border-radius: 50%;
+}
 
-        .header-icons .account h4 {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-left: 10px;
-        }
+.header-icons .account h4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 10px;
+}
 
 .container {
     max-width: 1200px;
@@ -93,12 +91,6 @@ nav li a:hover {
 
 section {
     padding: 20px;
-}
-
-.content-container {
-    display: inline;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 30px;
 }
 
 .book-set {

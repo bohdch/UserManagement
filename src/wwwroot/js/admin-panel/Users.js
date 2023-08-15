@@ -1,11 +1,11 @@
-async function getUsers() { 
+async function getUsers() {
     try {
-         // Fetch data from the "/api/users" endpoint using GET method
+        // Fetch data from the "/api/users" endpoint using GET method
         const response = await fetch("/api/users", {
             method: "GET",
-            headers: {"Accept" : "application/json"}
+            headers: { "Accept": "application/json" }
         });
-        
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -40,12 +40,12 @@ async function getUsers() {
         console.error(error);
     }
 }
-async function deleteUser(id){ 
+async function deleteUser(id) {
     try {
         // Fetch data from the "/api/users/{id}" endpoint using DELETE method
         const response = await fetch(`/api/users/${id}`, {
             method: "DELETE",
-            headers: {"Accept" : "application/json"}
+            headers: { "Accept": "application/json" }
         })
 
         // If response is successful, remove the row for the deleted user from the table
@@ -68,8 +68,8 @@ async function deleteUser(id){
 }
 
 // Adding a new row to the table
-function row (user) {
-    
+function row(user) {
+
     // Set the data-rowid attribute to the user's id
     const tr = document.createElement("tr");
     tr.setAttribute("data-rowid", user.id);
@@ -105,21 +105,21 @@ function row (user) {
     const linksTd = document.createElement("td");
 
     // Create a view button
-    const updateLink = document.createElement("button"); 
+    const updateLink = document.createElement("button");
     updateLink.append("View");
     linksTd.append(updateLink);
-    
+
     // Event Handler for the 'Create' button
-    updateLink.addEventListener("click", async() => await getUser(user.id));
-    
+    updateLink.addEventListener("click", async () => await getUser(user.id));
+
     // Create a remove button
-    const removeLink = document.createElement("button"); 
+    const removeLink = document.createElement("button");
     removeLink.append("Remove");
     linksTd.append(removeLink);
 
     // Event Handler for the 'Remove' button
     removeLink.addEventListener("click", async () => await deleteUser(user.id));
-    
+
     tr.appendChild(linksTd);
     return tr;
 }
