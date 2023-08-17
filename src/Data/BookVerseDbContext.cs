@@ -10,6 +10,7 @@ namespace BookVerse.Data
         public DbSet<Book> Books { get; set; } = null!;
         public DbSet<Author> Authors { get; set; } = null!;
         public DbSet<RequestedPage> RequestedPages { get; set; } = null!;
+        public DbSet<Collection> Collections { get; set; } = null!;
 
         public BookVerseDbContext(DbContextOptions<BookVerseDbContext> options)
             : base(options)

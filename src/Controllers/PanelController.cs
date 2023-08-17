@@ -20,6 +20,18 @@ namespace BookVerse.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Collections()
+        {
+            var model = await GetUserModelAsync();
+            return View(model);
+        }
+
+        public async Task<IActionResult> CollectionBuilder()
+        {
+            var model = await GetUserModelAsync();
+            return View(model);
+        }
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("UserAccount");

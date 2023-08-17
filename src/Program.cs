@@ -35,6 +35,7 @@ public class Program
         services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<IBookService, BookService>();
         services.AddTransient<IPageTrackingService, PageTrackingService>();
+        services.AddTransient<ICollectionService, CollectionService>();
 
 
         services.AddControllersWithViews();

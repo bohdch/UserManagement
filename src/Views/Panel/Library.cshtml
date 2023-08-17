@@ -75,6 +75,7 @@
         <div class="book-header">
             <img src="#" alt="Book Cover" id="book-image" />
             <div class="book-info">
+                <p id="book-id" hidden></p>
                 <h1 id="book-title"></h1>
                 <p id="book-author"></p>
                 <p><strong>Subjects:</strong> <span id="book-subjects"></span></p>
@@ -84,6 +85,8 @@
                 <a href="#" id="book-content" target="_blank">
                     <input type="button" value="Read" />
                 </a>
+
+                <button type="button" onclick="PickCollection()">Add to Collection</button>
             </div>
         </div>
         <section>
@@ -92,7 +95,16 @@
         </section>
         <button class="close" type="button" onclick="closeBookDetails()"></button>
     </div>
+
+    @*Details about collections*@
+    <div id="collections-details" style="display: none;">
+        <label for="collection-select">Select Collection:</label>
+        <select id="collection-select"></select>
+        <button type="button" onclick="addBookToCollection()">Add Book</button>
+    </div>
+
     <script src="~/js/user-panel/library.js"></script>
     <script src="~/js/user-panel/bookDetails.js"></script>
+    <script src="~/js/user-panel/collections.js"></script>
 </body>
 </html>

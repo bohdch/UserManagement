@@ -1,4 +1,5 @@
 const elements = {
+    bookId: document.getElementById("book-id"),
     bookDetails: document.getElementById("book-details"),
     contentContainer: document.getElementById("content-container"),
     bookImage: document.getElementById("book-image"),
@@ -118,10 +119,11 @@ function updateBookDetails(book) {
 }
 
 function displayBookDetails(book) {
-    const { image, title, authors, subjects, bookshelves, languages, description, linkToContent } = book;
+    const { image, id, title, authors, subjects, bookshelves, languages, description, linkToContent } = book;
 
     elements.bookImage.src = image;
     elements.bookImage.alt = "Book cover image";
+    elements.bookId.textContent = id;
     elements.bookTitle.textContent = title;
     elements.bookAuthor.textContent = authors;
     elements.bookSubjects.textContent = subjects;
