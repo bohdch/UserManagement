@@ -66,6 +66,21 @@ async function fetchAndSaveBooksFromAPI(category, page) {
 
 async function saveBooksToDatabase(books, category) {
     try {
+        for (const book of books) {
+            const { formats } = book;
+
+            // Filter the formats to only keep "text/html" and "image/jpeg" formats
+            const filteredFormats = {};
+            if (formats["text/html"]) {
+                filteredFormats["text/html"] = formats["text/html"];
+            }
+            if (formats["image/jpeg"]) {
+                filteredFormats["image/jpeg"] = formats["image/jpeg"];
+            }
+
+            book.formats = filteredFormats;
+        }
+
         const response = await fetch('/api/books/add', {
             method: 'POST',
             headers: {
