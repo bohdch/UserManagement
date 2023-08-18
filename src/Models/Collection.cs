@@ -7,11 +7,10 @@ namespace BookVerse.Models
 {
     public class Collection
     {
+        [Key]
         public int Id { get; set; }
 
-        // Which user owns a collection
-        public Guid UserId { get; set; }
-        /*public User user { get; set; }*/
+        public User User { get; set; }
 
         // Implement the description property
 

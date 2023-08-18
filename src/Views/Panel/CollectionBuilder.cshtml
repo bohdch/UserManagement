@@ -12,6 +12,9 @@
     <link href="/css/user-css/collection-builder.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Hidden input field to store user ID -->
+    <input type="hidden" id="userId" name="userId" value="@Model.Id">
+
     <div class="container">
         <h1>Create a New Collection</h1>
 
@@ -20,24 +23,20 @@
             <input type="text" id="title" name="title" required>
         </div>
 
-        <!-- Hidden input field to store user ID -->
-        <input type="hidden" id="userId" name="userId" value="@Model.Id">
-
         <button type="button" onclick="createCollection()">Create Collection</button>
     </div>
     <script>
         async function createCollection() {
             const Title = document.getElementById('title').value;
             const UserId = document.getElementById('userId').value;
-            const data = JSON.stringify({ title: Title, userId: UserId});
+            const queryString = `?title=${Title}&userId=${UserId}`;
 
             try {
-                const response = await fetch('/api/collection', {
+                const response = await fetch(`/api/collection${queryString}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: data
                 });
 
                 if (!response.ok) {

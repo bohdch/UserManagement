@@ -18,17 +18,20 @@ namespace BookVerse.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Collection>> GetCollections()
+        public async Task<IEnumerable<Collection>> GetCollections(string userId)
         {
-            List<Collection> collections = await _dbContext.Collections.ToListAsync();  
+            List<Collection> collections = await _dbContext.Collections
+                    .Where(c => c.User.Id == userId)
+                    .ToListAsync();
+
             return collections;
         }
 
-        public async Task<IEnumerable<BookViewModel>> GetBooksFromCollection([FromQuery] int collectionId)
+        public async Task<IEnumerable<BookViewModel>> GetBooksFromCollection(int collectionId)
         {
             var collection = await _dbContext.Collections
                 .Include(c => c.Books)
-                .ThenInclude(b => b.Authors) 
+                .ThenInclude(b => b.Authors)
                 .FirstOrDefaultAsync(c => c.Id == collectionId);
 
             var books = collection.Books
@@ -36,19 +39,20 @@ namespace BookVerse.Services
                 {
                     Id = book.Id,
                     Title = book.Title,
-                    Authors = book.Authors, 
+                    Authors = book.Authors,
                     Formats = book.Formats,
                 });
 
             return books;
         }
 
-        public async Task AddCollection(string title, Guid userId)
+        public async Task AddCollection(string title, string userId)
         {
+            var user = await _dbContext.Users.FindAsync(userId);
             var collection = new Collection
             {
                 Title = title,
-                UserId = userId,
+                User = user,
             };
 
             _dbContext.Add(collection);

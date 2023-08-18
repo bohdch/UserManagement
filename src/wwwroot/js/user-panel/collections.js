@@ -1,5 +1,7 @@
+const userId = document.getElementById('userId').value;
+
 async function PickCollection() {
-    const response = await fetch('/api/collections', {
+    const response = await fetch(`/api/collections/?userId=${userId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

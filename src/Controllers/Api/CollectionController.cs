@@ -20,9 +20,9 @@ namespace BookVerse.Controllers.Api
 
         // Get all existing book collections
         [HttpGet("/api/collections")]
-        public async Task<IActionResult> GetCollections()
+        public async Task<IActionResult> GetCollections([FromQuery] string userId)
         {
-            var collections = await _collectionService.GetCollections();
+            var collections = await _collectionService.GetCollections(userId);
             return Ok(collections);
         }
 
@@ -35,9 +35,9 @@ namespace BookVerse.Controllers.Api
 
         // Add a new collection
         [HttpPost("/api/collection")]
-        public async Task<IActionResult> AddCollection([FromBody] Collection CollectionData)
+        public async Task<IActionResult> AddCollection([FromQuery] string title, [FromQuery] string userId)
         {
-            await _collectionService.AddCollection(CollectionData.Title, CollectionData.UserId);
+            await _collectionService.AddCollection(title, userId);
             return Ok();
         }
 
