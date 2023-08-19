@@ -111,7 +111,7 @@ async function fetchAndDisplayBooksFromDB(category) {
 
         if (response.ok) {
             const books = await response.json();
-            const categoryBookSet = document.querySelector(`.book-heading[data-category="${category}"]`).parentElement;
+            const categoryBookSet = document.querySelector(`.book-heading[data-category="${category}"]`).nextElementSibling;
             books.forEach(bookData => categoryBookSet.appendChild(createBookElement(bookData)));
         } else {
             console.error("Failed to fetch data from the API");

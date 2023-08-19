@@ -23,7 +23,6 @@
 
             <div class="header-icons">
                 <div class="account">
-                    @**@
                     <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="">
                     <h4>@Model.Name</h4>
                 </div>
@@ -32,40 +31,43 @@
         <div class="container">
             <nav>
                 <ul>
-                    <li><a href="#">Popular</a></li>
-                    <li><a href="#">Classics</a></li>
-                    <li><a href="#">Fantasy</a></li>
-                    <li><a href="#">Romance</a></li>
-                    <li><a href="#">Mystery</a></li>
+                    <li><a href="#popular-section">Popular</a></li>
+                    <li><a href="#classics-section">Classics</a></li>
+                    <li><a href="#fantasy-section">Fantasy</a></li>
+                    <li><a href="#romance-section">Romance</a></li>
+                    <li><a href="#mystery-section">Mystery</a></li>
                 </ul>
             </nav>
         </div>
-        <section>
-            <div class="content-container">
-                <ul class="book-set">
-                    <li class="book-heading" data-category="Popular">Popular</li>
-                </ul>
-                <button id="nextPopularButton" data-page="1">Next</button>
+        <section class="book-categories">
+            <div class="book-category" id="popular-section">
+                <h2 class="book-heading" data-category="Popular">Popular</h2>
+                <ul class="book-set"></ul>
+                <button id="nextPopularButton" class="next-button">Next</button>
+            </div>
 
-                <ul class="book-set">
-                    <li class="book-heading" data-category="Classic">Classics</li>
-                </ul>
-                <button id="nextClassicsButton" data-page="1">Next</button>
+            <div class="book-category" id="classics-section">
+                <h2 class="book-heading" data-category="Classic">Classics</h2>
+                <ul class="book-set"></ul>
+                <button id="nextClassicsButton" class="next-button">Next</button>
+            </div>
 
-                <ul class="book-set">
-                    <li class="book-heading" data-category="Fantasy">Fantasy</li>
-                </ul>
-                <button id="nextFantasyButton" data-page="1">Next</button>
+            <div class="book-category" id="fantasy-section">
+                <h2 class="book-heading" data-category="Fantasy">Fantasy</h2>
+                <ul class="book-set"></ul>
+                <button id="nextFantasyButton" class="next-button">Next</button>
+            </div>
 
-                <ul class="book-set">
-                    <li class="book-heading" data-category="Romance">Romance</li>
-                </ul>
-                <button id="nextRomanceButton" data-page="1">Next</button>
+            <div class="book-category" id="romance-section">
+                <h2 class="book-heading" data-category="Romance">Romance</h2>
+                <ul class="book-set"></ul>
+                <button id="nextRomanceButton" class="next-button">Next</button>
+            </div>
 
-                <ul class="book-set">
-                    <li class="book-heading" data-category="Mystery">Mystery</li>
-                </ul>
-                <button id="nextMysteryButton" data-page="1">Next</button>
+            <div class="book-category" id="mystery-section">
+                <h2 class="book-heading" data-category="Mystery">Mystery</h2>
+                <ul class="book-set"></ul>
+                <button id="nextMysteryButton" class="next-button">Next</button>
             </div>
         </section>
     </div>

@@ -94,24 +94,55 @@ section {
 }
 
 .book-set {
-    padding: 10px;
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 40px; 
+    align-items: end; 
 }
 
 .book-heading {
     font-weight: bold;
     border-bottom: 1px solid #ccc;
+    margin-top: 25px;
 }
 
 .book {
     display: inline-block;
-    padding: 10px 0;
-    max-width: 200px;
-    margin-right: 60px;
+    padding: 20px 0px;
     text-align: center;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.book:hover {
+    transform: translateY(-10px); 
+}
+
+.book > img {
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
 li > h3, li > p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.book-category > button {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 25px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+}
+
+.book-category > button:hover {
+    background-color: #f0f0f0; 
+    transform: translateY(-4px); 
+    color: #555; 
 }
