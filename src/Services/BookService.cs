@@ -44,8 +44,8 @@ namespace BookVerse.Services
                 .AsNoTracking()
                 .OrderByDescending(book => book.DownloadCount)
                 .Where(book =>
-                    ((string)(object)book.Bookshelves).Contains(category) ||
-                    ((string)(object)book.Subjects).Contains(category));
+                    book.Bookshelves.Contains(category) ||
+                    book.Subjects.Contains(category));
 
             var booksByCategory = await query
                 .Skip(offset)

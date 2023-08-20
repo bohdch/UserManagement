@@ -79,6 +79,11 @@ async function saveBooksToDatabase(books, category) {
             }
 
             book.formats = filteredFormats;
+
+            // Parsing arrays of strings into strings
+            book.subjects = book.subjects.join(', ');
+            book.bookshelves = book.bookshelves.join(', ');
+            book.languages = book.languages.join(', ');
         }
 
         const response = await fetch('/api/books/add', {

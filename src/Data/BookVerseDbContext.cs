@@ -22,34 +22,16 @@ namespace BookVerse.Data
         {
             // Nonclustered indexes
             modelBuilder.Entity<Book>()
-                .HasIndex(book => book.DownloadCount);
-
-            modelBuilder.Entity<Book>()
                 .HasIndex(book => book.Bookshelves);
 
+            modelBuilder.Entity<Book>()
+                .HasIndex(book => book.DownloadCount);
+
 
             modelBuilder.Entity<Book>()
-                .Property(e => e.Subjects)
+                .Property(e => e.Formats)
                 .HasConversion(
-                    v => string.Join(", ", v),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
-
-            modelBuilder.Entity<Book>()
-                .Property(e => e.Bookshelves)
-                .HasConversion(
-                    v => string.Join(", ", v),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
-
-            modelBuilder.Entity<Book>()
-               .Property(e => e.Languages)
-               .HasConversion(
-                   v => string.Join(", ", v),
-                   v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
-
-            modelBuilder.Entity<Book>()
-                .Property(e => e.Formats) 
-                .HasConversion(
-                    v => JsonConvert.SerializeObject(v), 
+                    v => JsonConvert.SerializeObject(v),
                     v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
         }
     }

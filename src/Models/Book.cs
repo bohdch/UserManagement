@@ -17,11 +17,11 @@ namespace BookVerse.Models
 
         public string Description { get; set; } = String.Empty;
 
-        public string[] Subjects { get; set; }
+        public string Subjects { get; set; }
 
-        public string[] Bookshelves { get; set; }
+        public string Bookshelves { get; set; }
 
-        public string[] Languages { get; set; }
+        public string Languages { get; set; }
 
         public Dictionary<string, string> Formats { get; set; }
 
