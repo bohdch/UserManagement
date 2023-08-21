@@ -10,6 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Collections</title>
+    <link href="/css/user-css/library.css" rel="stylesheet">
     <link href="/css/user-css/collections.css" rel="stylesheet">
     <link href="/css/user-css/book-details.css" rel="stylesheet" />
 </head>
@@ -25,11 +26,16 @@
                 </div>
             </div>
         </div>
-        <section class="books">
-            <ul id="bookList">
-                @*Books will dynamically appear here**@
-            </ul>
-        </section>
+        <div class="letter-filters">
+            @for (char letter = 'A'; letter <= 'Z'; letter++)
+            {
+                <div class="letter-filter" letter="@letter" style="display: none;">@letter</div>
+                <ul id="book-list">
+                    @*Books will dynamically appear here**@
+                </ul>
+            }
+        </div>
+        @*Add other section*@
     </div>
 
     <!-- Hidden input field to store user ID -->
@@ -58,85 +64,7 @@
         </section>
         <button class="close" type="button" onclick="closeBookDetails()"></button>
     </div>
-
     <script src="~/js/user-panel/bookDetails.js"></script>
-    <script>
-        const userId = document.getElementById('userId').value;
-
-        async function PickCollection() {
-            const response = await fetch(`/api/collections/?userId=${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            const data = await response.json();
-
-            const collectionSelectElement = document.getElementById('collection-select');
-            collectionSelectElement.innerHTML = '<option value="">Select a Collection</option>';
-
-            data.forEach(collection => {
-                const option = document.createElement('option');
-                option.value = collection.id;
-                option.textContent = collection.title;
-                collectionSelectElement.appendChild(option);
-            });
-
-            // Attach an event listener to the select element
-            collectionSelectElement.addEventListener('change', async (event) => {
-                const selectedCollectionId = event.target.value;
-                await fetchBooksFromCollection(selectedCollectionId);
-            });
-        }
-
-        async function fetchBooksFromCollection(collectionId) {
-            const response = await fetch(`/api/collection/books?collectionId=${collectionId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.ok) {
-                const books = await response.json();
-                const booksListElement = document.getElementById('bookList');
-                booksListElement.innerHTML = ''; // Clear previous results
-
-                books.forEach(book => {
-                    const bookElement = createBookElement(book);
-                    booksListElement.appendChild(bookElement);
-                });
-            } else {
-                console.error('Failed to fetch books from the collection.');
-            }
-        }
-
-        function createBookElement(bookData) {
-            const bookItem = document.createElement('li');
-            bookItem.className = 'book';
-
-            const bookImage = document.createElement('img');
-            bookImage.src = bookData.formats['image/jpeg'];
-            bookImage.alt = 'Audio Book';
-
-            const bookTitle = document.createElement('h3');
-            bookTitle.textContent = bookData.title;
-
-            const bookAuthor = document.createElement('p');
-            const authors = bookData.authors && bookData.authors.length > 0 ? bookData.authors.reduce((acc, author) => acc + ', ' + author.name, '').slice(2) : 'Undefined';
-            bookAuthor.textContent = authors;
-
-            bookItem.append(bookImage, bookTitle, bookAuthor);
-
-            bookItem.addEventListener('click', () => redirectToBookDetails(bookData, authors));
-
-            return bookItem;
-        }
-
-        // Call the PickCollection function when the page loads
-        document.addEventListener('DOMContentLoaded', async () => {
-            await PickCollection();
-        });
-    </script>
+    <script src="~/js/user-panel/collections.js"></script>
 </body>
 </html>

@@ -1,12 +1,3 @@
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1600px;
-    margin: 0 auto;
-}
-
 .icon {
     display: flex;
     align-items: center;
@@ -32,4 +23,18 @@
     text-overflow: ellipsis;
     margin-left: 10px;
 }
+
+#book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    align-items: end;
+}
+
+.letter-filters > div {
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    margin-top: 25px;
+}
+
 
