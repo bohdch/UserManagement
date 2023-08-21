@@ -138,7 +138,7 @@ function createBookElement(bookData) {
     bookTitle.textContent = bookData.title;
 
     const bookAuthor = document.createElement('p');
-    const authors = bookData.authors && bookData.authors.length > 0 ? bookData.authors.reduce((acc, author) => acc + ', ' + author.name, '').slice(2) : 'Undefined';
+    const authors = bookData.authors && bookData.authors.length > 0 ? bookData.authors.reduce((acc, author) => acc + '; ' + author.name, '').slice(2) : 'Unknown';
     bookAuthor.textContent = authors;
 
     bookItem.append(bookImage, bookTitle, bookAuthor);
