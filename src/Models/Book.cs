@@ -27,6 +27,8 @@ namespace BookVerse.Models
 
         [JsonPropertyName("download_count")]
         public int DownloadCount { get; set; }
+
+        public ICollection<Collection>? Collections { get; set; }
     }
 }
 
