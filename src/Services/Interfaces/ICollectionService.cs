@@ -13,5 +13,7 @@ namespace BookVerse.Services.Interfaces
         Task AddCollection(string title, string userId);
 
         Task AddBookToCollection(int bookId, int collectionId);
+
+        Task DeleteBookFromCollection(int bookId, int collectionId);
     }
 }

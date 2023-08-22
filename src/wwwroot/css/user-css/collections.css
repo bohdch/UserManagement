@@ -37,4 +37,7 @@
     margin-top: 25px;
 }
 
-
+.book-info > .delete {
+    background-color: red;
+    font-size: 17px;
+}

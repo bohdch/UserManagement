@@ -29,10 +29,10 @@
         <div class="letter-filters">
             @for (char letter = 'A'; letter <= 'Z'; letter++)
             {
-                <div class="letter-filter" letter="@letter" style="display: none;">@letter</div>
-                <ul id="book-list">
-                    @*Books will dynamically appear here**@
-                </ul>
+            <div class="letter-filter" letter="@letter" style="display: none;">@letter</div>
+            <ul id="book-list">
+                @*Books will dynamically appear here**@
+            </ul>
             }
         </div>
         @*Add other section*@
@@ -56,6 +56,8 @@
                 <a href="#" id="book-content" target="_blank">
                     <input type="button" value="Read" />
                 </a>
+
+                <button class="delete" type="button" onclick="deleteBook()"><i class='bx bx-trash'></i></button>
             </div>
         </div>
         <section>

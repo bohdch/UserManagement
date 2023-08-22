@@ -74,5 +74,20 @@ namespace BookVerse.Services
 
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task DeleteBookFromCollection(int bookId, int collectionId)
+        {
+            var book = await _dbContext.Books.FindAsync(bookId);
+            var collection = await _dbContext.Collections.FindAsync(collectionId);
+
+            // Load the 'Books' collection of the provided 'collection' entity
+            await _dbContext.Entry(collection).Collection(c => c.Books).LoadAsync();
+
+            // Load the 'Collections' collection of the provided 'book' entity
+            await _dbContext.Entry(book).Collection(b => b.Collections).LoadAsync();
+
+            collection.Books.Remove(book);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

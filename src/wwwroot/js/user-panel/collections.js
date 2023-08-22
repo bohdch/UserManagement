@@ -34,7 +34,7 @@ async function loadCollectionsAndBooks() {
 async function fetchBooksFromCollection(collectionId) {
     clearBooksAndLetterFilters();
 
-    const response = await fetch(`/api/collection/books?collectionId=${collectionId}`, {
+    const response = await fetch(`/api/collection/books/?collectionId=${collectionId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -64,6 +64,9 @@ function createBookElement(bookData) {
     const bookItem = document.createElement('li');
     bookItem.className = 'book';
 
+    // Adding the data-book-id attribute
+    bookItem.setAttribute('data-book-id', bookData.id); 
+
     const bookImage = document.createElement('img');
     bookImage.src = bookData.formats['image/jpeg'];
     bookImage.alt = 'Audio Book';
@@ -80,6 +83,36 @@ function createBookElement(bookData) {
     bookItem.addEventListener('click', () => redirectToBookDetails(bookData, authors));
 
     return bookItem;
+}
+
+async function deleteBook() {
+    const bookId = document.getElementById('book-id').textContent;
+    const collectionSelectElement = document.getElementById('collection-select').value;
+
+    const confirmDelete = confirm("Are you sure you want to delete this book from the collection?");
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    const queryString = `/?bookId=${bookId}&collectionId=${collectionSelectElement}`;
+
+    const response = await fetch(`/api/collection/delete-book${queryString}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+
+    if (!response.ok) {
+        throw new Error("Failed to delete book from the Collection.");
+    }
+
+    // Remove the book element from the UI list
+    const bookElement = document.querySelector(`.book[data-book-id="${bookId}"]`);
+    bookElement.innerHTML = "";
+
+    closeBookDetails();
 }
 
 // Clear books and letter filters
