@@ -46,7 +46,7 @@ namespace BookVerse.Services
             return books;
         }
 
-        public async Task AddCollection(string title, string userId)
+        public async Task<int> AddCollection(string title, string userId)
         {
             var user = await _dbContext.Users.FindAsync(userId);
             var collection = new Collection
@@ -56,8 +56,9 @@ namespace BookVerse.Services
             };
 
             _dbContext.Add(collection);
-
             await _dbContext.SaveChangesAsync();
+
+            return collection.Id; // Return the collection's ID after it's been added
         }
 
         public async Task AddBookToCollection(int bookId, int collectionId)
@@ -72,6 +73,22 @@ namespace BookVerse.Services
 
             collection.Books.Add(book);
 
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task RenameCollection(int collectionId, string newTitle)
+        {
+            var collection = await _dbContext.Collections.FindAsync(collectionId);
+
+            collection.Title = newTitle;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteCollection(int collectionId)
+        {
+            var collection = await _dbContext.Collections.FindAsync(collectionId);
+            
+            _dbContext.Collections.Remove(collection);
             await _dbContext.SaveChangesAsync();
         }
 

@@ -10,9 +10,13 @@ namespace BookVerse.Services.Interfaces
 
         Task<IEnumerable<BookViewModel>> GetBooksFromCollection(int collectionId);
 
-        Task AddCollection(string title, string userId);
+        Task<int> AddCollection(string title, string userId);
 
         Task AddBookToCollection(int bookId, int collectionId);
+
+        Task RenameCollection(int collectionId, string newTitle);
+
+        Task DeleteCollection(int collectionId);
 
         Task DeleteBookFromCollection(int bookId, int collectionId);
     }

@@ -26,7 +26,7 @@ namespace BookVerse.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> CollectionBuilder()
+        public async Task<IActionResult> CollectionsManager()
         {
             var model = await GetUserModelAsync();
             return View(model);

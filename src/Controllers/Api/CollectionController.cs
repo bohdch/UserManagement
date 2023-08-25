@@ -37,14 +37,28 @@ namespace BookVerse.Controllers.Api
         [HttpPost("/api/collection")]
         public async Task<IActionResult> AddCollection([FromQuery] string title, [FromQuery] string userId)
         {
-            await _collectionService.AddCollection(title, userId);
-            return Ok();
+            var collectionId = await _collectionService.AddCollection(title, userId);
+            return Ok(collectionId);
         }
 
         [HttpPost("/api/collection/add-book")]
         public async Task<IActionResult> AddBookToCollection([FromQuery] int bookId, [FromQuery] int collectionId)
         {
             await _collectionService.AddBookToCollection(bookId, collectionId);
+            return Ok();
+        }
+
+        [HttpPut("/api/collection")]
+        public async Task<IActionResult> RenameCollection([FromQuery] int collectionId, [FromQuery] string newTitle)
+        {
+            await _collectionService.RenameCollection(collectionId, newTitle);
+            return Ok();
+        }
+
+        [HttpDelete("api/collection")]
+        public async Task<IActionResult> DeleteCollection([FromQuery] int collectionId)
+        {
+            await _collectionService.DeleteCollection(collectionId);
             return Ok();
         }
 

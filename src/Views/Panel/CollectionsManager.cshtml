@@ -1,0 +1,64 @@
+@using BookVerse.Models
+@model User
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections Manager</title>
+    <link rel="stylesheet" href="/css/user-css/collections-manager.css">
+</head>
+<body>
+    <div class="header">
+        <div class="account">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="">
+            <h4>@Model.Name</h4>
+        </div>
+        <h2>Collections Manager</h2>
+    </div>
+
+    <div class="container">
+        <input type="hidden" id="userId" value="@Model.Id">
+
+        <ul id="operations">
+            <li>
+                <a href="#" class="title" onclick="toggleContent('create')">Create Collection</a>
+                <div id="create-content" class="content" style="display: none;">
+                    <label for="title">Collection Title:</label>
+                    <input type="text" id="title" required>
+
+                    <button type="button" onclick="createCollection()">Create Collection</button>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="title" onclick="toggleContent('rename')">Rename Collections</a>
+                <div id="rename-content" class="content" style="display: none;">
+                    <label for="rename-collection-select" id="base-collection-label">Collections</label>
+                    <select id="rename-collection-select"></select>
+
+                    <label for="new-title" id="rename-collection-label" style="display: none;">Rename Collection</label>
+                    <input type="text" id="new-title" style="display: none;">
+
+                    <button type="button" id="rename-button" onclick="renameCollection()">Rename</button>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="title" onclick="toggleContent('delete')">Delete Collections</a>
+                <div id="delete-content" class="content" style="display: none;">
+                    <label for="delete-collection-select">Collections</label>
+                    <select id="delete-collection-select"></select>
+
+                    <button type="button" class="button-danger" onclick="deleteCollection()">Delete</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script src="~/js/user-panel/collectionsManager.js"></script>
+</body>
+</html>
