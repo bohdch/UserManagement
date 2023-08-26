@@ -12,6 +12,7 @@
     <title>Library</title>
     <link href="/css/user-css/library.css" rel="stylesheet" >
     <link href="/css/user-css/book-details.css" rel="stylesheet" />
+    <link href="/css/user-css/collections-details.css" rel="stylesheet" />
 </head>
 <body>
     <div id="content-container">
@@ -71,6 +72,7 @@
             </div>
         </section>
     </div>
+    <div id="backdrop"></div>
 
     <!-- Hidden input field to store user ID -->
     <input type="hidden" id="userId" name="userId" value="@Model.Id">
@@ -103,15 +105,20 @@
 
     @*Details about collections*@
     <div id="collections-details" style="display: none;">
-        <label for="collection-select">Select Collection:</label>
+        <label for="collection-select">Select a Collection</label>
         <select id="collection-select"></select>
-        <button type="button" onclick="addBookToCollection()">Add Book</button>
+
+        <button type="button" class="add-book" onclick="addBookToCollection()">Add Book</button>
+        <button class="close" type="button" onclick="closeCollectionsDetails()"></button>
     </div>
 
     <script src="~/js/user-panel/library.js"></script>
     <script src="~/js/user-panel/bookDetails.js"></script>
     <script>
         const userId = document.getElementById('userId').value;
+
+        const collectionsDetails = document.getElementById('collections-details');
+        const backdrop = document.getElementById('backdrop');
 
         async function PickCollection() {
             const response = await fetch(`/api/collections/?userId=${userId}`, {
@@ -123,7 +130,6 @@
             const data = await response.json();
 
             const collectionSelectElement = document.getElementById('collection-select');
-            collectionSelectElement.innerHTML = '<option value="">Select a Collection</option>';
 
             data.forEach(collection => {
                 const option = document.createElement('option');
@@ -133,6 +139,9 @@
             });
 
             document.getElementById('collections-details').style.display = 'block';
+
+            collectionsDetails.classList.add('active');
+            backdrop.classList.add('active');
         }
 
         async function addBookToCollection() {
@@ -149,9 +158,17 @@
                     },
                 });
 
+                closeCollectionsDetails();
+
             } catch (error) {
                 console.error("An error occurred:", error);
             }
+        }
+
+        function closeCollectionsDetails() {
+            document.getElementById('collections-details').style.display = 'none';
+            collectionsDetails.classList.remove('active');
+            backdrop.classList.remove('active');
         }
     </script>
 </body>
