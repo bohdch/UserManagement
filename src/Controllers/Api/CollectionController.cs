@@ -5,6 +5,7 @@ using BookVerse.Services.Interfaces;
 using BookVerse.Services.Interfaces;
 using BookVerse.Models;
 using BookVerse.Models.ViewModels;
+using BookVerse.Validation;
 
 namespace BookVerse.Controllers.Api
 {
@@ -37,15 +38,39 @@ namespace BookVerse.Controllers.Api
         [HttpPost("/api/collection")]
         public async Task<IActionResult> AddCollection([FromQuery] string title, [FromQuery] string userId)
         {
-            var collectionId = await _collectionService.AddCollection(title, userId);
-            return Ok(collectionId);
+            try
+            {
+                var collectionId = await _collectionService.AddCollection(title, userId);
+                return Ok(collectionId);
+            }
+            catch (DuplicateTitleException ex)
+            {
+                return Conflict(ex.Message); // 409 Conflict status code
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                return StatusCode(500, "An error occurred");
+            }
         }
 
         [HttpPost("/api/collection/add-book")]
         public async Task<IActionResult> AddBookToCollection([FromQuery] int bookId, [FromQuery] int collectionId)
         {
-            await _collectionService.AddBookToCollection(bookId, collectionId);
-            return Ok();
+            try
+            {
+                await _collectionService.AddBookToCollection(bookId, collectionId);
+                return Ok();
+            }
+            catch (DuplicateTitleException ex)
+            {
+                return Conflict(ex.Message); // 409 Conflict status code
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                return StatusCode(500, "An error occurred");
+            }
         }
 
         [HttpPut("/api/collection")]

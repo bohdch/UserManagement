@@ -6,6 +6,7 @@ using BookVerse.Services.Interfaces;
 using BookVerse.Models;
 using BookVerse.Models.ViewModels;
 using BookVerse.Data;
+using BookVerse.Validation;
 
 namespace BookVerse.Services
 {
@@ -49,6 +50,12 @@ namespace BookVerse.Services
         public async Task<int> AddCollection(string title, string userId)
         {
             var user = await _dbContext.Users.FindAsync(userId);
+
+            if (_dbContext.Collections.Any(c => c.User == user && c.Title == title))
+            {
+                throw new DuplicateTitleException("A collection with the same title already exists.");
+            }
+
             var collection = new Collection
             {
                 Title = title,
@@ -66,13 +73,15 @@ namespace BookVerse.Services
             var book = await _dbContext.Books.FindAsync(bookId);
             var collection = await _dbContext.Collections.FindAsync(collectionId);
 
-            if (collection.Books == null)
+            collection.Books ??= new List<Book>();
+            await _dbContext.Entry(collection).Collection(c => c.Books).LoadAsync();
+
+            if (collection.Books?.Any(b => b.Id == book.Id) == true)
             {
-                collection.Books = new List<Book>();
+                throw new DuplicateTitleException("The book is already in the collection.");
             }
 
             collection.Books.Add(book);
-
             await _dbContext.SaveChangesAsync();
         }
 

@@ -72,7 +72,9 @@
             </div>
         </section>
     </div>
+
     <div id="backdrop"></div>
+    <div id="notification" style="display: none;"></div>
 
     <!-- Hidden input field to store user ID -->
     <input type="hidden" id="userId" name="userId" value="@Model.Id">
@@ -121,6 +123,9 @@
         const backdrop = document.getElementById('backdrop');
 
         async function PickCollection() {
+            const collectionSelectElement = document.getElementById('collection-select');
+            collectionSelectElement.innerHTML = ''; // Clear previous options
+
             const response = await fetch(`/api/collections/?userId=${userId}`, {
                 method: 'GET',
                 headers: {
@@ -128,8 +133,6 @@
                 },
             });
             const data = await response.json();
-
-            const collectionSelectElement = document.getElementById('collection-select');
 
             data.forEach(collection => {
                 const option = document.createElement('option');
@@ -158,8 +161,14 @@
                     },
                 });
 
-                closeCollectionsDetails();
-
+                if (response.ok) {
+                    showNotification("Book successfully added!", 3000);
+                    closeCollectionsDetails();
+                }
+                else if (response.status === 409) {
+                    showNotification("This book is already in the collection!", 3000, true);
+                    closeCollectionsDetails();
+                }
             } catch (error) {
                 console.error("An error occurred:", error);
             }
@@ -169,6 +178,23 @@
             document.getElementById('collections-details').style.display = 'none';
             collectionsDetails.classList.remove('active');
             backdrop.classList.remove('active');
+        }
+
+        function showNotification(message, duration, isError) {
+            const notification = document.getElementById('notification');
+
+            notification.style.backgroundColor = '';
+            notification.textContent = message;
+
+            // Set background color to red for error notifications
+            if (isError) {
+                notification.style.backgroundColor = 'red';
+            }
+
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, duration);
         }
     </script>
 </body>

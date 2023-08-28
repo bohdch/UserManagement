@@ -112,6 +112,7 @@ async function deleteBook() {
     const bookElement = document.querySelector(`.book[data-book-id="${bookId}"]`);
     bookElement.innerHTML = "";
 
+    showNotification("Book removed from this collection!", 3000);
     closeBookDetails();
 }
 
@@ -130,6 +131,16 @@ function updateLetterFilters(lettersWithBooks) {
         const letter = letterFilter.getAttribute('letter');
         letterFilter.style.display = lettersWithBooks.has(letter) ? 'block' : 'none';
     });
+}
+
+function showNotification(message, duration) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, duration);
 }
 
 // Call the loadCollectionsAndBooks function when the page loads

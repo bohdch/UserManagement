@@ -30,12 +30,13 @@ async function createCollection() {
             // Clear the input field after successful creation
             document.getElementById('title').value = '';
 
-            handleResponse(response, "The Collection was created!", "Failed to create the Collection.");
-        } else {
-            alert("Failed to create the Collection.");
+            showNotification("Collection created!", 3000);
+        } else if (response.status === 409) {
+            showNotification("A collection with the same title already exists", 3000, true);
         }
+        
     } catch (error) {
-        console.error("An error occurred:", error);
+        console.error("An error occurred", error);
     }
 }
 
@@ -60,7 +61,7 @@ async function renameCollection() {
         const newTitle = inputForTitle.value.trim();
 
         if (!newTitle) {
-            alert("Please enter a new title.");
+            showNotification("Please enter a new title.", 3000);
             return;
         }
 
@@ -75,16 +76,21 @@ async function renameCollection() {
             const optionsToUpdate = document.querySelectorAll(`#rename-collection-select option[value='${selectedCollectionId}'], #delete-collection-select option[value='${selectedCollectionId}']`);
             optionsToUpdate.forEach(option => option.textContent = newTitle);
 
+            showNotification("Collection name changed!", 3000);
+
             toggleElementVisibility(labelCollection, labelForTitle);
             toggleElementVisibility(selectedCollection, inputForTitle);
 
-            handleResponse(response, "The Collection was renamed!", "Failed to rename the Collection.");
+
         } catch (error) {
             console.error("An error occurred:", error);
         }
 
+        setTimeout(() => {
+            renameButton.disabled = false;
+        }, 500);
+
         inputForTitle.removeEventListener("change", handleChange);
-        renameButton.disabled = false; // Enable the button after the operation is complete
     };
 
     inputForTitle.addEventListener("change", handleChange);
@@ -104,9 +110,10 @@ async function deleteCollection() {
         if (response.ok) {
             removeOptionFromSelect('delete-collection-select', selectedCollectionId);
             removeOptionFromSelect('rename-collection-select', selectedCollectionId);
-            handleResponse(response, "The Collection was deleted!", "Failed to delete the Collection.");
+
+            showNotification("Collection deleted!", 3000);
         } else {
-            console.log("Failed to delete the Collection.");
+            showNotification("Failed to delete the Collection", 3000, true); 
         }
     } catch (error) {
         console.error("An error occurred:", error);
@@ -152,15 +159,24 @@ function toggleElementVisibility(showElement, hideElement) {
     hideElement.style.display = "none";
 }
 
-async function handleResponse(response, successMessage, errorMessage) {
-    if (!response.ok) {
-        alert(errorMessage);
-    } else {
-        alert(successMessage);
+function showNotification(message, duration, isError = false) {
+    const notification = document.getElementById('notification');
+
+    notification.style.backgroundColor = '';
+    notification.textContent = message;
+
+    // Set background color to red for error notifications
+    if (isError) {
+        notification.style.backgroundColor = 'red';
     }
+
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, duration);
 }
 
-(async function () {
+(async function() {
     await fetchAndPopulateCollections('rename-collection-select');
     await fetchAndPopulateCollections('delete-collection-select');
 })();
