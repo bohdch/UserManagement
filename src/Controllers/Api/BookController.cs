@@ -51,6 +51,13 @@ namespace BookVerse.Controllers.Api
             return Ok();
         }
 
+        [HttpPost("/api/book/add")]
+        public async Task<IActionResult> AddBook(Book book)
+        {
+            await _bookService.AddBook(book);
+            return Ok();
+        }
+
         [HttpPut("/api/book-details/update")]
         public async Task<IActionResult> UpdateBookDetails(BookDetailsViewModel book)
         {

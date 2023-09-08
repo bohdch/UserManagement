@@ -20,6 +20,13 @@ namespace BookVerse.Controllers
             return View(model);
         }
 
+        [Route("{controller}/Library/Search")]
+        public async Task<IActionResult> Search()
+        {
+            var model = await GetUserModelAsync();
+            return View(model);
+        }
+
         public async Task<IActionResult> Collections()
         {
             var model = await GetUserModelAsync();

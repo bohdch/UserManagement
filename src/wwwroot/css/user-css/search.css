@@ -1,0 +1,31 @@
+h2 {
+    margin: 20px 10px 20px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#message {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    padding: 20px;
+}
+
+#Buttons > button {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 25px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+}
+
+#Buttons > button:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-4px);
+    color: #555;
+}

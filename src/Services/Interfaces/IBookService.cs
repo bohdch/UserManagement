@@ -15,7 +15,9 @@ namespace BookVerse.Services.Interfaces
         Task<BookDetailsViewModel> GetBookDetails(int bookId);
         
         Task AddBooks(List<Book> books);
-        
+
+        Task AddBook(Book book);
+
         Task UpdateBookDetails(BookDetailsViewModel book);
     }
 }

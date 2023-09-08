@@ -139,7 +139,7 @@ function displayBookDetails(book) {
     elements.bookImage.alt = "Book cover image";
     elements.bookId.textContent = id;
     elements.bookTitle.textContent = title;
-    elements.bookAuthor.innerHTML = authorStrings.join('. ');
+    elements.bookAuthor.innerHTML = authorStrings.join(' and ');
     elements.bookSubjects.textContent = subjects;
     elements.bookBookshelves.textContent = bookshelves;
     elements.bookLanguages.textContent = languages;

@@ -99,6 +99,12 @@ namespace BookVerse.Services
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task AddBook(Book book)
+        {
+            _dbContext.Books.Add(book);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task UpdateBookDetails(BookDetailsViewModel book)
         {
             Book result = await _dbContext.Books.FindAsync(book.Id);

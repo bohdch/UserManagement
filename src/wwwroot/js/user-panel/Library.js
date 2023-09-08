@@ -1,5 +1,9 @@
 const CALLS_PER_LOAD = 2;
 
+const userId = document.getElementById('userId').value;
+const collectionsDetails = document.getElementById('collections-details');
+const backdrop = document.getElementById('backdrop');
+
 const currentPageForAPI = {
     Popular: 1,
     Classic: 1,
@@ -168,6 +172,81 @@ async function loadInitialBooks() {
         await fetchAndSaveBooksFromAPI(category, currentPageForAPI[category]);
         await fetchAndDisplayBooksFromDB(category);
     }
+}
+
+async function PickCollection() {
+    const collectionSelectElement = document.getElementById('collection-select');
+    collectionSelectElement.innerHTML = ''; // Clear previous options
+
+    const response = await fetch(`/api/collections/?userId=${userId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const data = await response.json();
+
+    data.forEach(collection => {
+        const option = document.createElement('option');
+        option.value = collection.id;
+        option.textContent = collection.title;
+        collectionSelectElement.appendChild(option);
+    });
+
+    document.getElementById('collections-details').style.display = 'block';
+
+    collectionsDetails.classList.add('active');
+    backdrop.classList.add('active');
+}
+
+async function addBookToCollection() {
+    const selectedCollectionId = document.getElementById('collection-select').value;
+    const bookId = document.getElementById('book-id').textContent;
+
+    const url = `/api/collection/add-book?bookId=${bookId}&collectionId=${selectedCollectionId}`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            showNotification("Book successfully added!", 3000);
+            closeCollectionsDetails();
+        }
+        else if (response.status === 409) {
+            showNotification("This book is already in the collection!", 3000, true);
+            closeCollectionsDetails();
+        }
+    } catch (error) {
+        console.error("An error occurred:", error);
+    }
+}
+
+function closeCollectionsDetails() {
+    document.getElementById('collections-details').style.display = 'none';
+    collectionsDetails.classList.remove('active');
+    backdrop.classList.remove('active');
+}
+
+function showNotification(message, duration, isError) {
+    const notification = document.getElementById('notification');
+
+    notification.style.backgroundColor = '';
+    notification.textContent = message;
+
+    // Set background color to red for error notifications
+    if (isError) {
+        notification.style.backgroundColor = 'red';
+    }
+
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, duration);
 }
 
 document.getElementById('nextPopularButton').addEventListener('click', () => loadNextPageOfBooks('Popular'));
