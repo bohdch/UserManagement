@@ -1,6 +1,6 @@
-# UserManagementApp
+# BookVerse
 
-UserManagementApp is a basic app for managing user data. It provides endpoints for performing basic CRUD operations on user data, including retrieving user information, adding new users, updating existing users, and deleting users.
+BookVerse is an online library application designed to provide users with easy access to a vast collection of books. It's designed with a user-friendly interface for readers and administrators alike. It offers a wide range of features for users, such as searching for books, browsing the library's extensive collection, accessing detailed book information...
 
 ## Running the Project
 
@@ -14,14 +14,10 @@ In order to run the project, follow these steps:
 
 ## Technologies Used
 
-UserManagementApp is built using the following technologies:
+BookVerse is built using the following technologies:
 
-- .NET 7.0
-- ASP.NET Core
+- .NET
+- ASP.NET (Core/Web Api/MVC)
 - C#
-- HTML 
-- CSS 
-- JavaScript
+- HTML / CSS / JavaScript
 - EF
-- REST
-- MVC pattern
