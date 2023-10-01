@@ -5,115 +5,82 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Library</title>
-    <link href="/css/user-css/library.css" rel="stylesheet" >
+@section Styles {
+    <link href="/css/user-css/library.css" rel="stylesheet">
     <link href="/css/user-css/book-details.css" rel="stylesheet" />
     <link href="/css/user-css/collections-details.css" rel="stylesheet" />
-</head>
-<body>
-    <div id="content-container">
-        <div class="header">
-            <div class="search_box">
-                <input type="text" id="searchInput" placeholder="Quick Search" required>
-                <i id="search-icon" class='bx bx-search-alt-2'></i>
-            </div>
+}
 
-            <div class="header-icons">
-                <div class="account">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="">
-                    <h4>@Model.Name</h4>
-                </div>
+<!-- Common Elements -->
+<input type="hidden" id="userId" name="userId" value="@Model.Id">
+<div id="backdrop"></div>
+<div id="notification" style="display: none;"></div>
+
+<div id="content-container">
+    <div class="header">
+        <div class="search_box">
+            <input type="text" id="searchInput" placeholder="Quick Search" required>
+            <i id="search-icon" class='bx bx-search-alt-2'></i>
+        </div>
+
+        <div class="header-icons">
+            <div class="account">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="">
+                <h4>@Model.Name</h4>
             </div>
         </div>
-        <div class="container">
-            <nav>
-                <ul>
-                    <li><a href="#popular-section">Popular</a></li>
-                    <li><a href="#classics-section">Classics</a></li>
-                    <li><a href="#fantasy-section">Fantasy</a></li>
-                    <li><a href="#romance-section">Romance</a></li>
-                    <li><a href="#mystery-section">Mystery</a></li>
-                </ul>
-            </nav>
+    </div>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#popular-section">Popular</a></li>
+                <li><a href="#classics-section">Classics</a></li>
+                <li><a href="#fantasy-section">Fantasy</a></li>
+                <li><a href="#romance-section">Romance</a></li>
+                <li><a href="#mystery-section">Mystery</a></li>
+            </ul>
+        </nav>
+    </div>
+    <section class="book-categories">
+        <div class="book-category" id="popular-section">
+            <h2 class="book-heading" data-category="Popular">Popular</h2>
+            <ul class="book-set"></ul>
+            <button id="nextPopularButton" class="next-button">Next</button>
         </div>
-        <section class="book-categories">
-            <div class="book-category" id="popular-section">
-                <h2 class="book-heading" data-category="Popular">Popular</h2>
-                <ul class="book-set"></ul>
-                <button id="nextPopularButton" class="next-button">Next</button>
-            </div>
 
-            <div class="book-category" id="classics-section">
-                <h2 class="book-heading" data-category="Classic">Classics</h2>
-                <ul class="book-set"></ul>
-                <button id="nextClassicsButton" class="next-button">Next</button>
-            </div>
-
-            <div class="book-category" id="fantasy-section">
-                <h2 class="book-heading" data-category="Fantasy">Fantasy</h2>
-                <ul class="book-set"></ul>
-                <button id="nextFantasyButton" class="next-button">Next</button>
-            </div>
-
-            <div class="book-category" id="romance-section">
-                <h2 class="book-heading" data-category="Romance">Romance</h2>
-                <ul class="book-set"></ul>
-                <button id="nextRomanceButton" class="next-button">Next</button>
-            </div>
-
-            <div class="book-category" id="mystery-section">
-                <h2 class="book-heading" data-category="Mystery">Mystery</h2>
-                <ul class="book-set"></ul>
-                <button id="nextMysteryButton" class="next-button">Next</button>
-            </div>
-        </section>
-    </div>
-
-    <div id="backdrop"></div>
-    <div id="notification" style="display: none;"></div>
-
-    <!-- Hidden input field to store user ID -->
-    <input type="hidden" id="userId" name="userId" value="@Model.Id">
-
-    @*Details about a specific book*@
-    <div id="book-details" style="display: none;">
-        <div class="book-header">
-            <img src="" alt="Book Cover" id="book-image" />
-            <div class="book-info">
-                <p id="book-id" hidden></p>
-                <h1 id="book-title"></h1>
-                <p id="book-author"></p>
-                <p><strong>Subjects:</strong> <span id="book-subjects"></span></p>
-                <p><strong>Bookshelves:</strong> <span id="book-bookshelves"></span></p>
-                <p><strong>Language(s):</strong> <span id="book-languages"></span></p>
-
-                <a href="#" id="book-content" target="_blank">
-                    <input type="button" value="Read" />
-                </a>
-
-                <button type="button" onclick="PickCollection()">Add to Collection</button>
-            </div>
+        <div class="book-category" id="classics-section">
+            <h2 class="book-heading" data-category="Classic">Classics</h2>
+            <ul class="book-set"></ul>
+            <button id="nextClassicsButton" class="next-button">Next</button>
         </div>
-        <section>
-            <h3>Description:</h3>
-            <p id="book-description"></p>
-        </section>
-        <button class="close" type="button" onclick="closeBookDetails()"></button>
-    </div>
 
-    @*Details about collections*@
-    <div id="collections-details" style="display: none;">
-        <label for="collection-select">Select a Collection</label>
-        <select id="collection-select"></select>
+        <div class="book-category" id="fantasy-section">
+            <h2 class="book-heading" data-category="Fantasy">Fantasy</h2>
+            <ul class="book-set"></ul>
+            <button id="nextFantasyButton" class="next-button">Next</button>
+        </div>
 
-        <button type="button" class="add-book" onclick="addBookToCollection()">Add Book</button>
-        <button class="close" type="button" onclick="closeCollectionsDetails()"></button>
-    </div>
+        <div class="book-category" id="romance-section">
+            <h2 class="book-heading" data-category="Romance">Romance</h2>
+            <ul class="book-set"></ul>
+            <button id="nextRomanceButton" class="next-button">Next</button>
+        </div>
 
+        <div class="book-category" id="mystery-section">
+            <h2 class="book-heading" data-category="Mystery">Mystery</h2>
+            <ul class="book-set"></ul>
+            <button id="nextMysteryButton" class="next-button">Next</button>
+        </div>
+    </section>
+</div>
+
+@*Details about a specific book*@
+@await Html.PartialAsync("BookDetailsPartial")
+
+@*Details about collections*@
+@await Html.PartialAsync("CollectionsDetailsPartial")
+
+@section Scripts {
     <script src="~/js/user-panel/library.js"></script>
     <script src="~/js/user-panel/bookDetails.js"></script>
     <script>
@@ -131,5 +98,4 @@
             });
         });
     </script>
-</body>
-</html>
+}

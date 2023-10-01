@@ -1,0 +1,31 @@
+<div id="book-details" style="display: none;">
+    <div class="book-header">
+        <img src="" alt="Book Cover" id="book-image" />
+        <div class="book-info">
+            <p id="book-id" hidden></p>
+            <h1 id="book-title"></h1>
+            <p id="book-author"></p>
+            <p><strong>Subjects:</strong> <span id="book-subjects"></span></p>
+            <p><strong>Bookshelves:</strong> <span id="book-bookshelves"></span></p>
+            <p><strong>Language(s):</strong> <span id="book-languages"></span></p>
+
+            <a href="#" id="book-content" target="_blank">
+                <input type="button" value="Read" />
+            </a>
+
+            @if (ViewData["IsCollectionsPage"] == "true")
+            {
+                <button class="delete" type="button" onclick="deleteBook()"><i class='bx bx-trash'></i></button>
+            }
+            else
+            {
+                <button type="button" onclick="PickCollection()" id="add-to-collection">Add to Collection</button>
+            }
+        </div>
+    </div>
+    <section>
+        <h3>Description:</h3>
+        <p id="book-description"></p>
+    </section>
+    <button class="close" type="button" onclick="closeBookDetails()"></button>
+</div>

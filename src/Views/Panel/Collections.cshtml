@@ -5,70 +5,47 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Collections</title>
+@section Styles {
     <link href="/css/user-css/library.css" rel="stylesheet">
     <link href="/css/user-css/collections.css" rel="stylesheet">
     <link href="/css/user-css/book-details.css" rel="stylesheet" />
-</head>
-<body>
-    <div id="content-container">
-        <div class="header">
-            <select id="collection-select"></select>
+}
 
-            <div class="icon">
-                <div class="account">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="User Avatar">
-                    <h4>@Model.Name</h4>
-                </div>
+<!-- Common Elements -->
+<input type="hidden" id="userId" name="userId" value="@Model.Id">
+<div id="notification" style="display: none;"></div>
+
+<div id="content-container">
+    <div class="header">
+        <select id="collection-select"></select>
+
+        <div class="icon">
+            <div class="account">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="User Avatar">
+                <h4>@Model.Name</h4>
             </div>
         </div>
-        <div class="letter-filters">
-            @for (char letter = 'A'; letter <= 'Z'; letter++)
-            {
-            <div class="letter-filter" letter="@letter" style="display: none;">@letter</div>
-            <ul id="book-list">
-                @*Books will dynamically appear here**@
-            </ul>
-            }
-        </div>
-        @*Add other section*@
     </div>
-
-    <div id="notification" style="display: none;"></div>
-
-    <!-- Hidden input field to store user ID -->
-    <input type="hidden" id="userId" name="userId" value="@Model.Id">
-
-    @*Details about a specific book*@
-    <div id="book-details" style="display: none;">
-        <div class="book-header">
-            <img src="#" alt="Book Cover" id="book-image" />
-            <div class="book-info">
-                <p id="book-id" hidden></p>
-                <h1 id="book-title"></h1>
-                <p id="book-author"></p>
-                <p><strong>Subjects:</strong> <span id="book-subjects"></span></p>
-                <p><strong>Bookshelves:</strong> <span id="book-bookshelves"></span></p>
-                <p><strong>Language(s):</strong> <span id="book-languages"></span></p>
-
-                <a href="#" id="book-content" target="_blank">
-                    <input type="button" value="Read" />
-                </a>
-
-                <button class="delete" type="button" onclick="deleteBook()"><i class='bx bx-trash'></i></button>
-            </div>
-        </div>
-        <section>
-            <h3>Description:</h3>
-            <p id="book-description"></p>
-        </section>
-        <button class="close" type="button" onclick="closeBookDetails()"></button>
+    <div class="letter-filters">
+        @for (char letter = 'A'; letter <= 'Z'; letter++)
+        {
+        <div class="letter-filter" letter="@letter" style="display: none;">@letter</div>
+        <ul id="book-list">
+            @*Books will dynamically appear here**@
+        </ul>
+        }
     </div>
+    @*Add other section*@
+</div>
+
+@{
+    ViewData["IsCollectionsPage"] = "true"; // Use the same key "IsCollectionsPage"
+}
+
+@*Details about a specific book*@
+@await Html.PartialAsync("BookDetailsPartial")
+
+@section Scripts {
     <script src="~/js/user-panel/bookDetails.js"></script>
     <script src="~/js/user-panel/collections.js"></script>
-</body>
-</html>
+}

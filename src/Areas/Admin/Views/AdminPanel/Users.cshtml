@@ -2,6 +2,10 @@
     Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin-css/users.css" />
+}
+
 <div class="container">
     <table>
         <thead>
@@ -22,11 +26,5 @@
 
 @section Scripts {
     <script src="~/js/admin-panel/users.js"></script>
-    <script type="text/javascript">
-        getUsers();
-    </script>
-}
-
-@section Styles {
-    <link rel="stylesheet" href="~/css/admin-css/users.css" />
+    <script type="text/javascript"> getUsers(); </script>
 }
