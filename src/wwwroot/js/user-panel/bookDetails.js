@@ -1,4 +1,7 @@
 let scrollPosition = 0;
+let currentBook = null;
+
+const readButton = document.getElementById('read-book');
 
 const elements = {
     bookId: document.getElementById("book-id"),
@@ -11,7 +14,7 @@ const elements = {
     bookBookshelves: document.getElementById("book-bookshelves"),
     bookLanguages: document.getElementById("book-languages"),
     bookDescription: document.getElementById("book-description"),
-    bookLinkToContent: document.getElementById("book-content"),
+    bookLinkToContent: document.getElementById("read-book"),
 };
 
 async function redirectToBookDetails(bookData, authors) {
@@ -121,9 +124,10 @@ function updateBookDetails(book) {
 }
 
 function displayBookDetails(book) {
+    currentBook = book;
     const { image, id, title, authors, birth_year, death_year, subjects, bookshelves, languages, description, linkToContent } = book;
 
-    const authorNames = authors.split('; '); 
+    const authorNames = authors.split('; ');
     const authorStrings = [];
 
     for (let i = 0; i < authorNames.length; i++) {
@@ -178,3 +182,12 @@ function closeBookDetails() {
     elements.contentContainer.style.display = "block";
     window.scroll(0, scrollPosition);
 }
+
+readButton.addEventListener('click', function () {
+    var iframeSrc = elements.bookLinkToContent.href;
+    var iframeStyle = `height: 100%; width: 100%; position: absolute; left: 0px; right: 0px; bottom: 0px; top: 0px; border: none;`;
+
+    var newWindow = window.open('/', '_blank');
+
+    newWindow.document.write(`<iframe src="${iframeSrc}" style="${iframeStyle}"></iframe>`);
+});
